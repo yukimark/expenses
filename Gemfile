@@ -31,6 +31,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  #テスト用
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -54,3 +57,29 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# 自動でlintしてくれる
+gem 'rubocop', require:false
+gem 'rubocop-rails', require:false
+# html.slimを使うため
+gem 'slim-rails'
+gem 'html2slim'
+# cssフレームワーク
+gem 'bootstrap'
+gem 'jquery-rails'
+# デバッグ用
+gem 'pry-rails'
+# テーブルの情報をmodelに書き出してくれる
+gem 'annotate'
+# 日本語化の設定
+gem 'rails-i18n'
+# 論理削除を使うため
+gem 'paranoia'
+# それらしいユーザーを大量に追加する
+gem 'faker'
+# ログイン周り
+gem 'devise'
+# ページネーション
+gem 'kaminari'
+# メールの送信を確認する
+gem 'mailcatcher'

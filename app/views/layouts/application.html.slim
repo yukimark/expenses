@@ -1,0 +1,25 @@
+doctype html
+html lang='ja'
+  head
+    title= full_title(yield(:title))
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  body.bg-light
+    header.pt-3.bg-success.bg-gradient
+      div.container.d-flex.flex-row.justify-content-between
+        div.pb-2
+          h1=t('expenses')
+        div
+          ul.d-flex.flex-row.list-group
+            li.ms-3.list-group-item.bg-info=link_to t('signup'), '#'
+            li.ms-3.list-group-item.bg-info=link_to t('login'), '#'
+    nav.container
+      ul.list-group.d-flex.flex-row
+        li.list-group-item=link_to 'トップ', root_path
+        li.list-group-item=link_to '家計', '#'
+        li.list-group-item=link_to '設定', '#'
+    = yield
+    footer

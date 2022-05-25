@@ -1,0 +1,136 @@
+inherit_from: .rubocop_todo.yml
+
+require: rubocop-rails
+
+Layout/AccessModifierIndentation:
+  Enabled: true
+
+Layout/BlockAlignment:
+  Enabled: true
+
+Layout/EmptyLines:
+  Enabled: true
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
+Layout/EndOfLine:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Enabled: true
+
+Layout/LeadingCommentSpace:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: space
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ColonMethodCall:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/NumericLiterals:
+  MinDigits: 15
+
+Style/StringLiterals:
+  Enabled: true
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+
+Style/SignalException:
+  EnforcedStyle: semantic
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+# スペースで文字列を揃えていることが多く、引っかかってしまうので回避
+# Layout/AlignHash:
+# エラーが出たので書き換え
+  Layout/HashAlignment:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.7
+  Exclude:
+    - Gemfile
+    - bin/*
+    - config/puma.rb
+    - db/schema.rb
+    - db/migrate/*
+    - db/fixtures/*
+    - submodules/zengin-code/bin/**
+    - spec/spec_helper.rb
+    - spec/rails_helper.rb
+    - lib/where_helper.rb
+    - lib/yaml_config.rb
+    - vendor/bundle/**/*
+    # ルーティング設定はコードが増えて行く一方なので外します
+    - config/routes/*
+
+
+# annotate追加時からこの記述なので省略
+Metrics/BlockLength:
+  Exclude:
+    - lib/tasks/auto_annotate_models.rake
+
+# rubocopに従うとエラーが出たので除外
+Rails/RakeEnvironment:
+  Exclude:
+    - lib/tasks/auto_annotate_models.rake
+
+# 必要な記述なので除外
+Style/RedundantSelf:
+  Enabled: false

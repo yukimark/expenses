@@ -1,5 +1,8 @@
 require 'active_support/core_ext/integer/time'
 
+# 左上のパフォーマンス表示のやつ
+Rack::MiniProfiler.config.start_hidden = true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

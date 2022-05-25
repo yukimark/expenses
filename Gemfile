@@ -34,6 +34,8 @@ group :development, :test do
   #テスト用
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  # メールの送信を確認する
+  gem 'mailcatcher'
 end
 
 group :development do
@@ -81,5 +83,3 @@ gem 'faker'
 gem 'devise'
 # ページネーション
 gem 'kaminari'
-# メールの送信を確認する
-gem 'mailcatcher'

@@ -1,37 +1,16 @@
 h2 インデックス
-- flash.each do |message_type, message|
-  div class="container alert alert-#{message_type}"
-    = message
-= form_with class: 'container', model: @spend, local: true do |f|
-  .form-group
-    = f.label :b_item
-    = f.text_field :b_item, class: 'form-control'
-  .form-group
-    = f.label :c_item
-    = f.text_field :c_item, class: 'form-control'
-  .form-group
-    = f.label :content
-    = f.text_field :content, class: 'form-control'
-  .form-group
-    = f.label :price
-    = f.text_field :price, class: 'form-control'
-  .form-group 
-    = f.label :memo
-    = f.text_area :memo, rows: 3, class: 'form-control'
-  .form-group 
-    = f.hidden_field :user_id, :value => '1'
-  = f.submit nil,class: 'btn btn-primary'
+= render partial: 'form'
 table.table.table-hover.table-bordered.container.mt-5
   thead 
     tr 
-      th.col-2 日時
-      th 大項目
-      th 中項目
-      th 内容
-      th 金額
-      th.col-4 メモ
-      th 編集
-      th 削除
+      th.col-2 =t('created_at')
+      th =t('b_item')
+      th =t('c_item')
+      th =t('content')
+      th =t('price')
+      th.col-4 =t('memo')
+      th =t('edit')
+      th =t('destroy')
   tbody 
     - @spends.each do |spend|
       tr 
@@ -41,5 +20,5 @@ table.table.table-hover.table-bordered.container.mt-5
         td = spend.content 
         td = spend.price 
         td = spend.memo
-        td = link_to '編集', '#'
-        td = link_to '削除', '#'
+        td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
+        td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

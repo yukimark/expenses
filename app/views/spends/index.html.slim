@@ -1,0 +1,24 @@
+h2 インデックス
+= render partial: 'form'
+table.table.table-hover.table-bordered.container.mt-5
+  thead 
+    tr 
+      th.col-2 =t('created_at')
+      th =t('b_item')
+      th =t('c_item')
+      th =t('content')
+      th =t('price')
+      th.col-4 =t('memo')
+      th =t('edit')
+      th =t('destroy')
+  tbody 
+    - @spends.each do |spend|
+      tr 
+        td.row-2 = spend.created_at.to_s(:datetime_jp)
+        td = spend.b_item 
+        td = spend.c_item 
+        td = spend.content 
+        td = spend.price 
+        td = spend.memo
+        td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
+        td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

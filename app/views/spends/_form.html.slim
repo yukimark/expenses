@@ -1,0 +1,22 @@
+- flash.each do |message_type, message|
+  div class="container alert alert-#{message_type}"
+    = message
+= form_with class: 'container', model: @spend, local: true do |f|
+  .form-group
+    = f.label :b_item
+    = f.text_field :b_item, class: 'form-control'
+  .form-group
+    = f.label :c_item
+    = f.text_field :c_item, class: 'form-control'
+  .form-group
+    = f.label :content
+    = f.text_field :content, class: 'form-control'
+  .form-group
+    = f.label :price
+    = f.text_field :price, class: 'form-control'
+  .form-group 
+    = f.label :memo
+    = f.text_area :memo, rows: 3, class: 'form-control'
+  .form-group 
+    = f.hidden_field :user_id, :value => '1'
+  = f.submit nil,class: 'btn btn-primary'

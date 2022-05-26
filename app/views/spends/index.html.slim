@@ -1,0 +1,45 @@
+h2 インデックス
+- flash.each do |message_type, message|
+  div class="container alert alert-#{message_type}"
+    = message
+= form_with class: 'container', model: @spend, local: true do |f|
+  .form-group
+    = f.label :b_item
+    = f.text_field :b_item, class: 'form-control'
+  .form-group
+    = f.label :c_item
+    = f.text_field :c_item, class: 'form-control'
+  .form-group
+    = f.label :content
+    = f.text_field :content, class: 'form-control'
+  .form-group
+    = f.label :price
+    = f.text_field :price, class: 'form-control'
+  .form-group 
+    = f.label :memo
+    = f.text_area :memo, rows: 3, class: 'form-control'
+  .form-group 
+    = f.hidden_field :user_id, :value => '1'
+  = f.submit nil,class: 'btn btn-primary'
+table.table.table-hover.table-bordered.container.mt-5
+  thead 
+    tr 
+      th.col-2 日時
+      th 大項目
+      th 中項目
+      th 内容
+      th 金額
+      th.col-4 メモ
+      th 編集
+      th 削除
+  tbody 
+    - @spends.each do |spend|
+      tr 
+        td.row-2 = spend.created_at.to_s(:datetime_jp)
+        td = spend.b_item 
+        td = spend.c_item 
+        td = spend.content 
+        td = spend.price 
+        td = spend.memo
+        td = link_to '編集', '#'
+        td = link_to '削除', '#'

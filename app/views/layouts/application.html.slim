@@ -11,7 +11,7 @@ html lang='ja'
     header.pt-3.bg-success.bg-gradient
       div.container.d-flex.flex-row.justify-content-between
         div.pb-2
-          h1=t('expenses')
+          h1= t('expenses')
         div
           ul.d-flex.flex-row.list-group
             li.ms-3.list-group-item.bg-info=link_to t('signup'), '#'
@@ -22,4 +22,5 @@ html lang='ja'
         li.list-group-item=link_to '家計', '#'
         li.list-group-item=link_to '設定', '#'
     = yield
-    footer
+    footer.bg-success.bg-gradient
+      dev.container

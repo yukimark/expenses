@@ -35,7 +35,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   # メールの送信を確認する
-  gem 'mailcatcher'
+  # gem 'mailcatcher'
 end
 
 group :development do

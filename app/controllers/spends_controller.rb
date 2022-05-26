@@ -1,17 +1,16 @@
 class SpendsController < ApplicationController
-
-  def index 
+  def index
     @spends = Spend.all.order(created_at: :desc)
     @spend = Spend.new
   end
 
-  def create 
+  def create
     @spend = Spend.new(spend_params)
     begin
       @spend.save!
       flash[:success] = '保存しました。'
       redirect_to action: 'index'
-    rescue
+    rescue StandardError
       flash.now[:danger] = @spend.error_message
       @spends = Spend.all.order(created_at: :desc)
       render :index
@@ -28,7 +27,7 @@ class SpendsController < ApplicationController
       @spend.update!(spend_params)
       flash[:success] = '保存しました。'
       redirect_to spends_path
-    rescue 
+    rescue StandardError
       flash.now[:danger] = @spend.error_message
       render :edit
     end
@@ -42,7 +41,8 @@ class SpendsController < ApplicationController
   end
 
   private
-    def spend_params
-      params.require(:spend).permit(:b_item, :c_item, :content, :price, :memo, :user_id)
-    end
+
+  def spend_params
+    params.require(:spend).permit(:b_item, :c_item, :content, :price, :memo, :user_id)
+  end
 end

@@ -82,5 +82,6 @@ gem 'paranoia'
 gem 'faker'
 # ログイン周り
 gem 'devise'
+gem 'devise-i18n'
 # ページネーション
 gem 'kaminari'

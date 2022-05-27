@@ -13,14 +13,27 @@ html lang='ja'
         div.pb-2
           h1= link_to t('expenses'), root_path, class: 'text-decoration-none text-reset'
         div
-          ul.d-flex.flex-row.list-group
-            li.ms-3.list-group-item.bg-info=link_to t('signup'), '#'
-            li.ms-3.list-group-item.bg-info=link_to t('login'), '#'
-    nav.container
-      ul.list-group.d-flex.flex-row
-        li.list-group-item=link_to 'トップ', root_path
-        li.list-group-item=link_to '家計', spends_path
-        li.list-group-item=link_to '設定', '#'
-    = yield
+          - if user_signed_in?
+            ul.d-flex.flex-row.list-group
+              li.ms-3.list-group-item.bg-info=link_to 'ログアウト', destroy_user_session_path, method: :delete
+          - else
+            ul.d-flex.flex-row.list-group
+              li.ms-3.list-group-item.bg-info=link_to t('signup'), new_user_registration_path
+              li.ms-3.list-group-item.bg-info=link_to t('login'), new_user_session_path
+    - if user_signed_in?
+      nav.container
+        ul.list-group.d-flex.flex-row
+          li.list-group-item=link_to 'トップ', root_path
+          li.list-group-item=link_to '家計', spends_path
+          li.list-group-item=link_to '設定', '#'
+    main.container
+      - flash.each do |message_type, message|
+        - if message_type == 'alert'
+          div.container.alert.alert-danger
+            = message
+        - elsif message_type == 'notice'
+          div.container.alert.alert-success
+            = message
+      = yield
     footer.bg-success.bg-gradient
       dev.container

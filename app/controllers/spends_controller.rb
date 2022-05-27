@@ -1,6 +1,9 @@
 class SpendsController < ApplicationController
+  before_action :logged_in_user
+  before_action :edit_can_user, only: [:edit, :update, :destroy]
+
   def index
-    @spends = Spend.all.order(created_at: :desc)
+    @spends = Spend.where(user_id:current_user.id).order(created_at: :desc)
     @spend = Spend.new
   end
 
@@ -12,7 +15,7 @@ class SpendsController < ApplicationController
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @spend.error_message
-      @spends = Spend.all.order(created_at: :desc)
+      @spends = Spend.where(user_id:current_user.id).order(created_at: :desc)
       render :index
     end
   end
@@ -44,5 +47,20 @@ class SpendsController < ApplicationController
 
   def spend_params
     params.require(:spend).permit(:b_item, :c_item, :content, :price, :memo, :user_id)
+  end
+
+  #before_action
+
+  def logged_in_user
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
+
+  def edit_can_user
+    spend = Spend.find(params[:id])
+    if spend.user_id != current_user.id
+      redirect_to spends_path
+    end
   end
 end

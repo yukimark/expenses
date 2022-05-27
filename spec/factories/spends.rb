@@ -15,5 +15,8 @@
 #
 FactoryBot.define do
   factory :spend do
+    content { 'テスト' }
+    price { 180 }
+    user
   end
 end

@@ -12,7 +12,7 @@ describe 'サインアップできるか', type: :system do
       fill_in '確認用パスワード', with: 'password'
       click_button 'アカウント登録'
     end
-    
+
     it 'ユーザーが作成される' do
       expect(page).to have_content 'アカウント登録が完了しました。'
     end

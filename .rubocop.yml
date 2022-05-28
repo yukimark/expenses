@@ -125,6 +125,10 @@ AllCops:
 Metrics/BlockLength:
   Exclude:
     - lib/tasks/auto_annotate_models.rake
+    # 一旦除外
+    - config/environments/development.rb
+    - spec/system/spends_spec.rb
+
 
 # rubocopに従うとエラーが出たので除外
 Rails/RakeEnvironment:

@@ -118,6 +118,5 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   # heroku用の設定
-  config.action_mailer.default_url_options = { :host => 'polar-meadow-7142.herokuapp.com' }
-
+  config.action_mailer.default_url_options = { host: 'polar-meadow-7142.herokuapp.com' }
 end

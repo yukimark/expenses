@@ -69,6 +69,5 @@ describe '出費crud機能', type: :system do
         expect(page).to have_content '金額を入力してください'
       end
     end
-    
   end
 end

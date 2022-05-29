@@ -14,6 +14,7 @@
 #  user_id(ユーザーID)    :integer          not null
 #
 class Spend < ApplicationRecord
+  # 数値バリデーションも欲しいですね
   validates :price, presence: true
   validates :user_id, presence: true
 

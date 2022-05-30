@@ -138,3 +138,8 @@ Rails/RakeEnvironment:
 # 必要な記述なので除外
 Style/RedundantSelf:
   Enabled: false
+
+# 空行を入れたらエラーになるので一旦除外
+Layout/EmptyLineAfterGuardClause:
+  Exclude:
+    - app/controllers/spends_controller.rb

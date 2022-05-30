@@ -14,7 +14,7 @@
 #  user_id(ユーザーID)    :integer          not null
 #
 class Spend < ApplicationRecord
-  validates :price, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999999}
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999999 }
   validates :user_id, presence: true
 
   belongs_to :user

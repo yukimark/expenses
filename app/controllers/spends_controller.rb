@@ -52,9 +52,8 @@ class SpendsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    unless current_user.spends.find_by(id: params[:id])
-      flash[:success] = '無効なURLです。' 
-      redirect_to spends_path
-    end
+    return if current_user.spends.find_by(id: params[:id])
+    flash[:success] = '無効なURLです。'
+    redirect_to spends_path
   end
 end

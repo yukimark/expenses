@@ -15,18 +15,19 @@ html lang='ja'
         div
           - if user_signed_in?
             ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-primary=link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'text-white'
+              li.ms-3.list-group-item.bg-primary
+                = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'text-white'
           - else
             ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-primary=link_to t('signup'), new_user_registration_path, class: 'text-white'
-              li.ms-3.list-group-item.bg-primary=link_to t('login'), new_user_session_path, class: 'text-white'
+              li.ms-3.list-group-item.bg-primary= link_to t('signup'), new_user_registration_path, class: 'text-white'
+              li.ms-3.list-group-item.bg-primary= link_to t('login'), new_user_session_path, class: 'text-white'
     - if user_signed_in?
       nav.container
         ul.list-group.d-flex.flex-row
-          li.list-group-item=link_to 'トップ', root_path
-          li.list-group-item=link_to '家計', spends_path
-          li.list-group-item=link_to '設定', '#'
-    main.container
+          li.list-group-item= link_to 'トップ', root_path
+          li.list-group-item= link_to '家計', spends_path
+          li.list-group-item= link_to '設定', '#'
+    main.container.mt-5
       - flash.each do |message_type, message|
         - if message_type == 'alert'
           div.container.alert.alert-danger
@@ -35,6 +36,6 @@ html lang='ja'
           div.container.alert.alert-success
             = message
       = yield
-    footer.bg-success.bg-gradient
+    footer.bg-success.bg-gradient.mt-5
       dev.container
         p フッターを作る予定

@@ -22,8 +22,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :spends
-         
-  # acts_as_paranoid
+  has_many :spends, dependent: :destroy
 
+  # acts_as_paranoid
 end

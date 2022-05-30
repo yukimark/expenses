@@ -2,7 +2,6 @@
   div class="container alert alert-#{message_type}"
     = message
 = form_with class: 'container', model: @spend, local: true do |f|
-  .
   .row
     .form-group.col-lg-6.col-xl-3
       = f.label :primary_item
@@ -23,3 +22,4 @@
       = f.label :memo
       = f.text_area :memo, rows: 2, class: 'form-control'
   = f.submit nil,class: 'btn btn-primary mt-3'
+

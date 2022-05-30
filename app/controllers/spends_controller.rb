@@ -3,19 +3,19 @@ class SpendsController < ApplicationController
   before_action :edit_can_user, only: %i[edit update destroy]
 
   def index
-    @spends = Spend.where(user_id: current_user.id).order(created_at: :desc)
-    @spend = Spend.new
+    @spends = current_user.spends.order(created_at: :desc)
+    @spend = current_user.spends.new
   end
 
   def create
-    @spend = Spend.new(spend_params)
+    @spend = current_user.spends.new(spend_params)
     begin
       @spend.save!
       flash[:success] = '保存しました。'
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @spend.error_message
-      @spends = Spend.where(user_id: current_user.id).order(created_at: :desc)
+      @spends = current_user.spends.order(created_at: :desc)
       render :index
     end
   end
@@ -46,7 +46,7 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:b_item, :c_item, :content, :price, :memo, :user_id)
+    params.require(:spend).permit(:primary_item, :secondary_item, :content, :price, :memo, :user_id)
   end
 
   # before_action

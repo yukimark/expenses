@@ -1,6 +1,6 @@
 class SpendsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_can_user, only: %i[edit update destroy]
+  before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
     @spends = current_user.spends.order(created_at: :desc)
@@ -51,12 +51,10 @@ class SpendsController < ApplicationController
 
   # before_action
 
-  def logged_in_user
-    redirect_to new_user_session_path unless user_signed_in?
-  end
-
-  def edit_can_user
-    spend = Spend.find(params[:id])
-    redirect_to spends_path if spend.user_id != current_user.id
+  def edit_permission_check
+    unless current_user.spends.find_by(id: params[:id])
+      flash[:success] = '無効なURLです。' 
+      redirect_to spends_path
+    end
   end
 end

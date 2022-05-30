@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_26_130436) do
+ActiveRecord::Schema.define(version: 2022_05_30_062616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2022_05_26_130436) do
   create_table "spends", comment: "支出を記録する", force: :cascade do |t|
     t.string "content", comment: "内容"
     t.integer "price", null: false, comment: "金額"
-    t.string "b_item", comment: "大項目"
-    t.string "c_item", comment: "中項目"
+    t.string "primary_item", comment: "大項目"
+    t.string "secondary_item", comment: "中項目"
     t.text "memo", comment: "メモ"
     t.datetime "deleted_at", comment: "論理削除用"
     t.integer "user_id", null: false, comment: "ユーザーID"

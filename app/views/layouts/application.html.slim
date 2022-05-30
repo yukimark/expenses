@@ -15,11 +15,11 @@ html lang='ja'
         div
           - if user_signed_in?
             ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-info=link_to 'ログアウト', destroy_user_session_path, method: :delete
+              li.ms-3.list-group-item.bg-primary=link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'text-white'
           - else
             ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-info=link_to t('signup'), new_user_registration_path
-              li.ms-3.list-group-item.bg-info=link_to t('login'), new_user_session_path
+              li.ms-3.list-group-item.bg-primary=link_to t('signup'), new_user_registration_path, class: 'text-white'
+              li.ms-3.list-group-item.bg-primary=link_to t('login'), new_user_session_path, class: 'text-white'
     - if user_signed_in?
       nav.container
         ul.list-group.d-flex.flex-row
@@ -37,3 +37,4 @@ html lang='ja'
       = yield
     footer.bg-success.bg-gradient
       dev.container
+        p フッターを作る予定

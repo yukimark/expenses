@@ -16,6 +16,9 @@
   .row 
     .form-group.col-xl-3
       = f.label :price, class: 'form-label'
+        = t('price')
+        span.badge.bg-danger.ms-1
+          | 必須
       = f.text_field :price, class: "form-control #{ 'is-invalid' if @spend.error_message != '' }", required: true, placeholder: '最大12桁'
   .row
     .form-group.col-xl-3 

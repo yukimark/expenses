@@ -19,7 +19,7 @@ table.table.table-hover.table-bordered.container.mt-2
         td = spend.primary_item 
         td = spend.secondary_item 
         td = spend.content 
-        td = spend.price 
+        td.text-end = spend.price.to_s(:delimited)
         td = spend.memo
         td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
         td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

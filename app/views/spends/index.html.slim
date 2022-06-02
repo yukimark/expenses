@@ -1,11 +1,12 @@
-h2 インデックス
+h2.mb-3 出費入力
 = render partial: 'form'
-table.table.table-hover.table-bordered.container.mt-5
+h2.mt-5 出費一覧
+table.table.table-hover.table-bordered.container.mt-2
   thead 
     tr 
       th.col-2 =t('created_at')
-      th =t('b_item')
-      th =t('c_item')
+      th =t('primary_item')
+      th =t('secondary_item')
       th =t('content')
       th =t('price')
       th.col-4 =t('memo')
@@ -15,10 +16,10 @@ table.table.table-hover.table-bordered.container.mt-5
     - @spends.each do |spend|
       tr 
         td.row-2 = spend.created_at.to_s(:datetime_jp)
-        td = spend.b_item 
-        td = spend.c_item 
+        td = spend.primary_item 
+        td = spend.secondary_item 
         td = spend.content 
-        td = spend.price 
+        td.text-end = spend.price.to_s(:delimited)
         td = spend.memo
         td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
         td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

@@ -1,21 +1,21 @@
 class SpendsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_can_user, only: %i[edit update destroy]
+  before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    @spends = Spend.where(user_id: current_user.id).order(created_at: :desc)
-    @spend = Spend.new
+    @spends = current_user.spends.order(created_at: :desc)
+    @spend = current_user.spends.new
   end
 
   def create
-    @spend = Spend.new(spend_params)
+    @spend = current_user.spends.new(spend_params)
     begin
       @spend.save!
       flash[:success] = '保存しました。'
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @spend.error_message
-      @spends = Spend.where(user_id: current_user.id).order(created_at: :desc)
+      @spends = current_user.spends.order(created_at: :desc)
       render :index
     end
   end
@@ -46,17 +46,14 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:b_item, :c_item, :content, :price, :memo, :user_id)
+    params.require(:spend).permit(:primary_item, :secondary_item, :content, :price, :memo, :user_id)
   end
 
   # before_action
 
-  def logged_in_user
-    redirect_to new_user_session_path unless user_signed_in?
-  end
-
-  def edit_can_user
-    spend = Spend.find(params[:id])
-    redirect_to spends_path if spend.user_id != current_user.id
+  def edit_permission_check
+    return if current_user.spends.find_by(id: params[:id])
+    flash[:success] = '無効なURLです。'
+    redirect_to spends_path
   end
 end

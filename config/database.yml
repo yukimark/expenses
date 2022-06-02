@@ -22,9 +22,10 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
   # ローカル用の設定
-  username: yuki
-  password: 8061
-  host: localhost
+  username: <%= ENV['EXPENSES_LOCAL_USERNAME'] %>
+  password: <%= ENV['EXPENSES_LOCAL_PASSWORD'] %>
+  host: <%= ENV['EXPENSES_LOCAL_HOST'] %>
+  port: <%= ENV['EXPENSES_LOCAL_PORT'] %>
 
   # docker用の設定
   # host: db

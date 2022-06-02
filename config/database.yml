@@ -25,6 +25,7 @@ default: &default
   username: <%= ENV['EXPENSES_LOCAL_USERNAME'] %>
   password: <%= ENV['EXPENSES_LOCAL_PASSWORD'] %>
   host: <%= ENV['EXPENSES_LOCAL_HOST'] %>
+  port: <%= ENV['EXPENSES_LOCAL_PORT'] %>
 
   # docker用の設定
   # host: db

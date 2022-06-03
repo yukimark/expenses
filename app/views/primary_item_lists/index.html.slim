@@ -5,7 +5,7 @@ p Find me in app/views/primary_item_lists/index.html.slim
 - flash.each do |message_type, message|
   div class="container alert alert-#{message_type}"
     = message
-= form_with class: 'container', model: @PrimaryItemList, local: true do |f|
+= form_with class: 'container', model: @primaryitemlist, local: true do |f|
   .row
     .form-group.col-lg-6.col-xl-3
       = f.label :primary_item, class: 'form-label'

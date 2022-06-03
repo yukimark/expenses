@@ -26,7 +26,7 @@ html lang='ja'
         ul.list-group.d-flex.flex-row
           li.list-group-item= link_to 'トップ', root_path
           li.list-group-item= link_to '家計', spends_path
-          li.list-group-item= link_to '設定', '#'
+          li.list-group-item= link_to '設定', setting_path
     main.container.mt-5
       - flash.each do |message_type, message|
         - if message_type == 'alert'

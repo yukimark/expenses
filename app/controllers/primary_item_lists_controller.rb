@@ -3,7 +3,7 @@ class PrimaryItemListsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    @primaryitemlists = PrimaryItemList.where(user_id: ['0', current_user.id])
+    @primaryitemlists = PrimaryItemList.where(user_id: ['1', current_user.id]).order(:id)
     @primaryitemlist = current_user.primary_item_lists.new
   end
 
@@ -15,7 +15,7 @@ class PrimaryItemListsController < ApplicationController
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @primaryitemlist.error_message
-      @primaryitemlists  = PrimaryItemList.where(user_id: ['0', current_user.id])
+      @primaryitemlists  = PrimaryItemList.where(user_id: ['1', current_user.id]).order(:id)
       render :index
     end
   end

@@ -87,4 +87,3 @@ PrimaryItemList.create!(
   primary_item: '未分類',
   user_id: '0'
 )
-

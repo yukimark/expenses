@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :primary_item_list do
-    primary_item { "MyString" }
+    primary_item { 'MyString' }
     user_id { 1 }
   end
 end

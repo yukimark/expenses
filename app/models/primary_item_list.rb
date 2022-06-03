@@ -13,5 +13,4 @@ class PrimaryItemList < ApplicationRecord
   validates :primary_item, presence: true
 
   belongs_to :user
-
 end

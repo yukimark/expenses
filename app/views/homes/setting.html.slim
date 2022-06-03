@@ -4,9 +4,8 @@ h2 各種設定
 p とりあえず機能だけを作る(見た目は後回し)
 
 ul
-  li アカウント削除機能
-  = link_to 'アカウント削除', user_registration_path, method: :delete, data:{confirm: 'アカウントを削除すると、全て消えてしまいます。本当に削除してもよいですか?'}
-  li ログイン情報編集機能
+  li アカウント情報編集機能
+  = link_to 'アカウント情報変更、削除', edit_user_registration_path
   li 大項目、中項目編集機能
 
 ul 

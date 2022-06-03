@@ -10,6 +10,8 @@ p Find me in app/views/primary_item_lists/index.html.slim
     .form-group.col-lg-6.col-xl-3
       = f.label :primary_item, class: 'form-label'
         = t('primary_item')
+        span.badge.bg-danger.ms-1
+          | 必須
       = f.text_field :primary_item, class: 'form-control'
   = f.submit nil,class: 'btn btn-primary mt-3'
 
@@ -24,6 +26,9 @@ table.table.table-hover.table-bordered.container.mt-2
     - @PrimaryItemLists.each do |primaryitemlist|
       tr 
         td = primaryitemlist.primary_item
-        - if primaryitemlist.user_id == current_user.id 
-          td = link_to t('edit'), '#', class: 'btn btn-primary'
-          td = link_to t('destroy'), '#', data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'
+        td
+          - if primaryitemlist.user_id == current_user.id 
+            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
+        td 
+          - if primaryitemlist.user_id == current_user.id 
+            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

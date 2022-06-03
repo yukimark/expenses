@@ -5,6 +5,7 @@ class SpendsController < ApplicationController
   def index
     @spends = current_user.spends.order(created_at: :desc)
     @spend = current_user.spends.new
+    @PrimaryItemLists = PrimaryItemList.all
   end
 
   def create
@@ -16,12 +17,14 @@ class SpendsController < ApplicationController
     rescue StandardError
       flash.now[:danger] = @spend.error_message
       @spends = current_user.spends.order(created_at: :desc)
+      @PrimaryItemLists  = PrimaryItemList.all
       render :index
     end
   end
 
   def edit
     @spend = Spend.find(params[:id])
+    @PrimaryItemLists = PrimaryItemList.all
   end
 
   def update
@@ -32,6 +35,7 @@ class SpendsController < ApplicationController
       redirect_to spends_path
     rescue StandardError
       flash.now[:danger] = @spend.error_message
+      @PrimaryItemLists = PrimaryItemList.all
       render :edit
     end
   end

@@ -1,5 +1,6 @@
 class PrimaryItemListsController < ApplicationController
   def index
+    @PrimaryItemLists  = PrimaryItemList.all
   end
 
   def create

@@ -6,7 +6,7 @@
     .form-group.col-lg-6.col-xl-3
       = f.label :primary_item, class: 'form-label'
         = t('primary_item')
-      = f.select :primary_item, [['食費','食費'],['日用品','日用品']], class: 'form-control', autofocus: true, include_blank: ''
+      = f.collection_select :primary_item, @PrimaryItemLists, :primary_item, :primary_item, class: 'form-control', autofocus: true, include_blank: ''
     .form-group.col-lg-6.col-xl-3
       = f.label :secondary_item, class: 'form-label'
         = t('secondary_item')

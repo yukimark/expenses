@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_30_062616) do
+ActiveRecord::Schema.define(version: 2022_06_03_110506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "primary_item_lists", comment: "出費の大項目リスト", force: :cascade do |t|
+    t.string "primary_item", null: false, comment: "大項目"
+    t.integer "user_id", null: false, comment: "current_user_idが入る"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "spends", comment: "支出を記録する", force: :cascade do |t|
     t.string "content", comment: "内容"

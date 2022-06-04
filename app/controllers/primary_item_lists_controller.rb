@@ -2,7 +2,7 @@ class PrimaryItemListsController < ApplicationController
   before_action :logged_in_user
   before_action :edit_permission_check, only: %i[edit update destroy]
 
-  DEFAULT_DATA_USER_ID = '0'
+  DEFAULT_DATA_USER_ID = '0'.freeze
 
   def index
     @primaryitemlists = PrimaryItemList.where(user_id: [DEFAULT_DATA_USER_ID, current_user.id]).order(:id)
@@ -56,6 +56,7 @@ class PrimaryItemListsController < ApplicationController
   def edit_permission_check
     primaryitemlist = PrimaryItemList.find(params[:id])
     return if current_user.id == primaryitemlist.user_id
+
     flash[:success] = '無効なURLです。'
     redirect_to root_path
   end

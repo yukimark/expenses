@@ -58,4 +58,11 @@ class PrimaryItemListsController < ApplicationController
     flash[:success] = '無効なURLです。'
     redirect_to root_path
   end
+
+  # after_update
+
+  def primaryitem_rename_spend_edit
+    primaryitemlist = PrimaryItemList.find(params[:id])
+    
+  end
 end

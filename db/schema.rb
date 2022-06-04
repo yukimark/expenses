@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_03_110506) do
+ActiveRecord::Schema.define(version: 2022_06_04_162508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
     t.integer "user_id", null: false, comment: "ユーザーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "primary_item_id", comment: "primary_item変更時の一括更新用"
   end
 
   create_table "users", force: :cascade do |t|

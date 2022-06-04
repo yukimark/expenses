@@ -13,6 +13,7 @@ p Find me in app/views/primary_item_lists/index.html.slim
         span.badge.bg-danger.ms-1
           | 必須
       = f.text_field :primary_item, class: 'form-control'
+      = f.hidden_field :user_id, :value => current_user.id
   = f.submit nil,class: 'btn btn-primary mt-3'
 
 

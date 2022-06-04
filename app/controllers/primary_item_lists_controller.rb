@@ -2,20 +2,22 @@ class PrimaryItemListsController < ApplicationController
   before_action :logged_in_user
   before_action :edit_permission_check, only: %i[edit update destroy]
 
+  DEFAULT_DATA_USER_ID = '0'
+
   def index
-    @primaryitemlists = PrimaryItemList.where(user_id: ['1', current_user.id]).order(:id)
-    @primaryitemlist = current_user.primary_item_lists.new
+    @primaryitemlists = PrimaryItemList.where(user_id: [DEFAULT_DATA_USER_ID, current_user.id]).order(:id)
+    @primaryitemlist = PrimaryItemList.new
   end
 
   def create
-    @primaryitemlist = current_user.primary_item_lists.new(primaryitemlist_params)
+    @primaryitemlist = PrimaryItemList.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
       flash[:success] = '保存しました。'
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @primaryitemlist.error_message
-      @primaryitemlists  = PrimaryItemList.where(user_id: ['1', current_user.id]).order(:id)
+      @primaryitemlists  = PrimaryItemList.where(user_id: [DEFAULT_DATA_USER_ID, current_user.id]).order(:id)
       render :index
     end
   end
@@ -52,8 +54,8 @@ class PrimaryItemListsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    return if current_user.primary_item_lists.find_by(id: params[:id])
-
+    primaryitemlist = PrimaryItemList.find(params[:id])
+    return if current_user.id == primaryitemlist.user_id
     flash[:success] = '無効なURLです。'
     redirect_to root_path
   end

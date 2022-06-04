@@ -7,4 +7,5 @@ p Find me in app/views/primary_item_lists/edit.html.slim
       = f.label :primary_item, class: 'form-label'
         = t('primary_item')
       = f.text_field :primary_item, class: 'form-control'
+      = f.hidden_field :user_id, :value => current_user.id
   = f.submit nil,class: 'btn btn-primary mt-3'

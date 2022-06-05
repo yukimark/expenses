@@ -1,6 +1,7 @@
 - flash.each do |message_type, message|
-  div class="container alert alert-#{message_type}"
+  div class="container alert alert-#{message_type} alert-dismissible fade show"
     = message
+    button class='btn-close' data-bs-dismiss="alert" aira-rabel="close"
 = form_with class: 'container', model: @spend, local: true do |f|
   .row
     .form-group.col-lg-6.col-xl-3

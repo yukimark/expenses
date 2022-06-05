@@ -11,9 +11,13 @@ class SpendsController < ApplicationController
   end
 
   def create
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
-    @spend = current_user.spends.new(spend_params.merge(primary_item_id: primary_item_id))
+    if params[:primary_item]
+      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
+      @spend = current_user.spends.new(spend_params.merge(primary_item_id: primary_item_id))
+    else
+      @spend = current_user.spends.new(spend_params)
+    end
     begin
       @spend.save!
       flash[:success] = '保存しました。'
@@ -32,11 +36,15 @@ class SpendsController < ApplicationController
   end
 
   def update
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id if params[:primary_item]
     primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
     @spend = Spend.find(params[:id])
     begin
-      @spend.update!(spend_params.merge(primary_item_id: primary_item_id))
+      if primary_item_id
+        @spend.update!(spend_params.merge(primary_item_id: primary_item_id))
+      else
+        @spend.update!(spend_params)
+      end
       flash[:success] = '保存しました。'
       redirect_to spends_path
     rescue StandardError

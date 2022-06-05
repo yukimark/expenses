@@ -36,8 +36,10 @@ class SpendsController < ApplicationController
   end
 
   def update
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id if params[:primary_item]
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
+    if params[:primary_item]
+      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
+    end
     @spend = Spend.find(params[:id])
     begin
       if primary_item_id

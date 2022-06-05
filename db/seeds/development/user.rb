@@ -16,7 +16,8 @@ Spend.create!(
   content: 'パン',
   price: '123456',
   memo: 'ああああああああああああああああtexttexttext',
-  user_id: '1'
+  user_id: '1',
+  primary_item_id: '1'
 )
 
 PrimaryItemList.create!(
@@ -113,3 +114,13 @@ PrimaryItemList.create!(
   primary_item: 'test',
   user_id: '1'
 )
+
+100.times do |n|
+  Spend.create!(
+    primary_item: 'test',
+    content: "#{n + 1}",
+    price: "#{n + 1}",
+    user_id: '1',
+    primary_item_id: '19'
+  )
+end

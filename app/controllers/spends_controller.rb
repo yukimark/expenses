@@ -11,7 +11,7 @@ class SpendsController < ApplicationController
   end
 
   def create
-    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id 
     if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id
     end

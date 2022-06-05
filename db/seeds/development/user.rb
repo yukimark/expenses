@@ -118,8 +118,8 @@ PrimaryItemList.create!(
 100.times do |n|
   Spend.create!(
     primary_item: 'test',
-    content: "#{n + 1}",
-    price: "#{n + 1}",
+    content: (n + 1).to_s,
+    price: (n + 1).to_s,
     user_id: '1',
     primary_item_id: '19'
   )

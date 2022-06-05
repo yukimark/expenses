@@ -59,5 +59,4 @@ class PrimaryItemListsController < ApplicationController
     flash[:success] = '無効なURLです。'
     redirect_to root_path
   end
-
 end

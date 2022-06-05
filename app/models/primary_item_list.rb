@@ -9,8 +9,6 @@
 #  user_id(current_user_idが入る) :integer          not null
 #
 class PrimaryItemList < ApplicationRecord
-  validates :user_id, presence: true
+  # validates :user_id, presence: true
   validates :primary_item, presence: true
-
-  belongs_to :user
 end

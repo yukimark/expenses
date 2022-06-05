@@ -1,10 +1,4 @@
-h1 PrimaryItemLists#edit
-p Find me in app/views/primary_item_lists/edit.html.slim
+- provide(:title, '大項目編集')
+h2 大項目編集
 
-= form_with class: 'container', model: @PrimaryItemList, local: true do |f|
-  .row
-    .form-group.col-lg-6.col-xl-3
-      = f.label :primary_item, class: 'form-label'
-        = t('primary_item')
-      = f.text_field :primary_item, class: 'form-control'
-  = f.submit nil,class: 'btn btn-primary mt-3'
+= render partial: 'form'

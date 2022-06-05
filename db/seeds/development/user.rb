@@ -1,3 +1,25 @@
+User.create!(
+  email: 'example01@gmail.com',
+  password: 'passpass',
+  password_confirmation: 'passpass'
+)
+
+User.create!(
+  email: 'example02@gmail.com',
+  password: 'passpass',
+  password_confirmation: 'passpass'
+)
+
+Spend.create!(
+  primary_item: '食費',
+  secondary_item: '朝ごはん',
+  content: 'パン',
+  price: '123456',
+  memo: 'ああああああああああああああああtexttexttext',
+  user_id: '1',
+  primary_item_id: '1'
+)
+
 PrimaryItemList.create!(
   primary_item: '食費',
   initial_value: 'true'
@@ -87,3 +109,18 @@ PrimaryItemList.create!(
   primary_item: '未分類',
   initial_value: 'true'
 )
+
+PrimaryItemList.create!(
+  primary_item: 'test',
+  user_id: '1'
+)
+
+100.times do |n|
+  Spend.create!(
+    primary_item: 'test',
+    content: (n + 1).to_s,
+    price: (n + 1).to_s,
+    user_id: '1',
+    primary_item_id: '19'
+  )
+end

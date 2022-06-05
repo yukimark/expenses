@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_03_110506) do
+ActiveRecord::Schema.define(version: 2022_06_04_162508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "primary_item_lists", comment: "出費の大項目リスト", force: :cascade do |t|
     t.string "primary_item", null: false, comment: "大項目"
-    t.integer "user_id", null: false, comment: "current_user_idが入る"
+    t.integer "user_id", comment: "current_user_idが入る"
+    t.boolean "initial_value", default: false, null: false, comment: "初期値ならtrue"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
     t.integer "user_id", null: false, comment: "ユーザーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "primary_item_id", comment: "primary_item変更時の一括更新用"
   end
 
   create_table "users", force: :cascade do |t|

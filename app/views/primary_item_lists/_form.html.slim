@@ -1,0 +1,13 @@
+- flash.each do |message_type, message|
+  div class="container alert alert-#{message_type}"
+    = message
+= form_with class: 'container', model: @primaryitemlist, local: true do |f|
+  .row
+    .form-group.col-lg-6.col-xl-3
+      = f.label :primary_item, class: 'form-label'
+        = t('primary_item')
+        span.badge.bg-danger.ms-1
+          | 必須
+      = f.text_field :primary_item, class: 'form-control'
+      = f.hidden_field :user_id, :value => current_user.id
+  = f.submit nil,class: 'btn btn-primary mt-3'

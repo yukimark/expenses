@@ -1,5 +1,5 @@
 - flash.each do |message_type, message|
-  div class="container alert alert-#{message_type} alert-dismissible fade show"
+  div class="container alert alert-#{message_type} alert-dismissible fade show" role='alert'
     = message
     button class='btn-close' data-bs-dismiss="alert" aira-rabel="close"
 = form_with class: 'container', model: @spend, local: true do |f|
@@ -30,4 +30,3 @@
         = t('memo')
       = f.text_area :memo, rows: 2, class: 'form-control'
   = f.submit nil,class: 'btn btn-primary mt-3'
-

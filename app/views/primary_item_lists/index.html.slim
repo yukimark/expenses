@@ -1,0 +1,21 @@
+- provide(:title, '大項目一覧')
+h2 大項目一覧、追加、編集、削除
+
+= render partial: 'form'
+
+table.table.table-hover.table-bordered.container.mt-2
+  thead.table-success
+    tr 
+      th =t('primary_item')
+      th =t('edit')
+      th =t('destroy')
+  tbody 
+    - @primaryitemlists.each do |primaryitemlist|
+      tr 
+        td = primaryitemlist.primary_item
+        td
+          - if primaryitemlist.user_id == current_user.id 
+            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
+        td 
+          - if primaryitemlist.user_id == current_user.id 
+            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

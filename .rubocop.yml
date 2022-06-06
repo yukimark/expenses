@@ -127,6 +127,7 @@ Metrics/BlockLength:
     - lib/tasks/auto_annotate_models.rake
     # 一旦除外
     - config/environments/development.rb
+    - spec/requests/primary_item_lists_spec.rb
     - spec/system/spends_spec.rb
 
 

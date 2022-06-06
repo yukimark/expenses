@@ -1,7 +1,6 @@
 - flash.each do |message_type, message|
-  div class="container alert alert-#{message_type} alert-dismissible fade show" role='alert'
+  div class="container alert alert-#{message_type}"
     = message
-    button class='btn-close' data-bs-dismiss="alert" aira-rabel="close"
 = form_with class: 'container', model: @spend, local: true do |f|
   .row
     .form-group.col-lg-6.col-xl-3
@@ -21,7 +20,7 @@
     .form-group.col-xl-3
       = f.label :price, class: 'form-label'
         = t('price')
-        span.badge.bg-danger.ms-1
+        span.badge.bg-danger.ms-1.rounded-pill
           | 必須
       = f.text_field :price, class: "form-control #{ 'is-invalid' if @spend.error_message != '' }", required: true, placeholder: '最大12桁'
   .row

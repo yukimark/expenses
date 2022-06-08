@@ -7,18 +7,14 @@
 #  primary_item(大項目)          :string           not null
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
-#  user_id(userと紐づけ)         :bigint
-#
-# Indexes
-#
-#  index_primary_item_lists_on_user_id  (user_id)
+#  user_id(userと紐づけ)         :integer
 #
 class PrimaryItemList < ApplicationRecord
   # validates :user_id, presence: true
   validates :primary_item, presence: true
 
   has_many :spends
-  belongs_to :user
+  # belongs_to :user
 
   # 初期値とユーザー追加のデータ取得
   def self.initial_and_useroriginal(user_id)

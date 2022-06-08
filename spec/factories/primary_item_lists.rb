@@ -7,11 +7,7 @@
 #  primary_item(大項目)          :string           not null
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
-#  user_id(userと紐づけ)         :bigint
-#
-# Indexes
-#
-#  index_primary_item_lists_on_user_id  (user_id)
+#  user_id(userと紐づけ)         :integer
 #
 FactoryBot.define do
   factory :primary_item_list do

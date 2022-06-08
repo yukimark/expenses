@@ -7,6 +7,8 @@ class CreateSpends < ActiveRecord::Migration[6.1]
       t.string :secondary_item, comment: '中項目'
       t.text :memo, comment: 'メモ'
       t.datetime :deleted_at, comment: '論理削除用'
+      t.integer :user_id, comment: 'userと紐づけ'
+      t.integer :primary_item_list_id, comment: 'primary_item_listと紐づけ'
 
       t.timestamps
     end

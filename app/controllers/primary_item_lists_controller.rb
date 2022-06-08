@@ -31,7 +31,7 @@ class PrimaryItemListsController < ApplicationController
     @primaryitemlist = PrimaryItemList.find(params[:id])
     begin
       @primaryitemlist.update!(primaryitemlist_params)
-      Spend.where(primary_item_id: params[:id]).update_all(primary_item: primaryitemlist_params[:primary_item])
+      Spend.where(primary_item_list_id: params[:id]).update_all(primary_item: primaryitemlist_params[:primary_item])
       flash[:success] = '保存しました。'
       redirect_to primary_item_lists_path
     rescue StandardError

@@ -11,10 +11,10 @@ class SpendsController < ApplicationController
   end
 
   def create
-    if params[:spend][:primary_item]
+    if params[:spend][:primary_item].present?
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
-      @spend = current_user.spends.new(spend_params.merge(primary_item_id: primary_item_id))
+      @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item_id))
     else
       @spend = current_user.spends.new(spend_params)
     end
@@ -36,14 +36,14 @@ class SpendsController < ApplicationController
   end
 
   def update
-    if params[:spend][:primary_item]
+    if params[:spend][:primary_item].present?
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
     end
     @spend = Spend.find(params[:id])
     begin
       if primary_item_id
-        @spend.update!(spend_params.merge(primary_item_id: primary_item_id))
+        @spend.update!(spend_params.merge(primary_item_list_id: primary_item_id))
       else
         @spend.update!(spend_params)
       end
@@ -66,7 +66,7 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:primary_item, :secondary_item, :content, :price, :memo, :user_id, :primary_item_id)
+    params.require(:spend).permit(:primary_item, :secondary_item, :content, :price, :memo, :user_id, :primary_item_list_id)
   end
 
   # before_action

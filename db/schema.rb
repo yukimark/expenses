@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_04_162508) do
+ActiveRecord::Schema.define(version: 2022_06_08_153335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "primary_item_lists", comment: "出費の大項目リスト", force: :cascade do |t|
     t.string "primary_item", null: false, comment: "大項目"
-    t.integer "user_id", comment: "current_user_idが入る"
+    t.bigint "user_id", comment: "userと紐づけ"
     t.boolean "initial_value", default: false, null: false, comment: "初期値ならtrue"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_primary_item_lists_on_user_id"
   end
 
   create_table "spends", comment: "支出を記録する", force: :cascade do |t|
@@ -30,10 +31,12 @@ ActiveRecord::Schema.define(version: 2022_06_04_162508) do
     t.string "secondary_item", comment: "中項目"
     t.text "memo", comment: "メモ"
     t.datetime "deleted_at", comment: "論理削除用"
-    t.integer "user_id", null: false, comment: "ユーザーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "primary_item_id", comment: "primary_item変更時の一括更新用"
+    t.bigint "user_id", comment: "userテーブルと紐づけ"
+    t.bigint "primary_item_list_id", comment: "primary_item_listテーブルと紐づけ"
+    t.index ["primary_item_list_id"], name: "index_spends_on_primary_item_list_id"
+    t.index ["user_id"], name: "index_spends_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,4 +51,5 @@ ActiveRecord::Schema.define(version: 2022_06_04_162508) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "spends", "users"
 end

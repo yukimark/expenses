@@ -11,4 +11,9 @@
 class PrimaryItemList < ApplicationRecord
   # validates :user_id, presence: true
   validates :primary_item, presence: true
+
+  # 初期値とユーザー追加のデータ取得
+  def self.initial_and_useroriginal(user_id)
+    where('user_id = ? or initial_value = ?', user_id, true).order(:id)
+  end
 end

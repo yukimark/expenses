@@ -7,11 +7,11 @@ class SpendsController < ApplicationController
   def index
     @spends = current_user.spends.order(created_at: :desc)
     @spend = current_user.spends.new
-    @primaryitemlists = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
+    @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
   end
 
   def create
-    if params[:primary_item]
+    if params[:spend][:primary_item]
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
       @spend = current_user.spends.new(spend_params.merge(primary_item_id: primary_item_id))
@@ -25,18 +25,18 @@ class SpendsController < ApplicationController
     rescue StandardError
       flash.now[:danger] = @spend.error_message
       @spends = current_user.spends.order(created_at: :desc)
-      @primaryitemlists = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
+      @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
       render :index
     end
   end
 
   def edit
     @spend = Spend.find(params[:id])
-    @primaryitemlists = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
+    @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
   end
 
   def update
-    if params[:primary_item]
+    if params[:spend][:primary_item]
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
       primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
     end
@@ -51,7 +51,7 @@ class SpendsController < ApplicationController
       redirect_to spends_path
     rescue StandardError
       flash.now[:danger] = @spend.error_message
-      @primaryitemlists = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
+      @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
       render :edit
     end
   end

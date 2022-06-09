@@ -19,7 +19,5 @@ class Spend < ApplicationRecord
   validates :user_id, presence: true
 
   belongs_to :user
-  # belongs_to :primary_item_list
-
-  # acts_as_paranoid
+  belongs_to :primary_item_list
 end

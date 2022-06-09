@@ -11,13 +11,10 @@ class SpendsController < ApplicationController
   end
 
   def create
-    if params[:spend][:primary_item].present?
-      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
-      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
-      @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item_id))
-    else
-      @spend = current_user.spends.new(spend_params)
-    end
+    params[:spend][:primary_item] = PrimaryItemList.find_by(primary_item: '未分類', initial_flag: true).primary_item if params[:spend][:primary_item].empty?
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
+    @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item_id))
     begin
       @spend.save!
       flash[:success] = '保存しました。'
@@ -36,10 +33,9 @@ class SpendsController < ApplicationController
   end
 
   def update
-    if params[:spend][:primary_item].present?
-      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
-      primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
-    end
+    params[:spend][:primary_item] = PrimaryItemList.find_by(primary_item: '未分類', initial_flag: true).primary_item if params[:spend][:primary_item].empty?
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item]).id
+    primary_item_id = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], user_id: current_user.id).id if primary_item_id > PRIMARY_ITEM_LIST_ID_INITIAL_MAX
     @spend = Spend.find(params[:id])
     begin
       if primary_item_id
@@ -66,7 +62,7 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:primary_item, :secondary_item, :content, :price, :memo, :user_id, :primary_item_list_id)
+    params.require(:spend).permit(:primary_item, :content, :price, :user_id, :primary_item_list_id)
   end
 
   # before_action

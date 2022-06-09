@@ -1,8 +1,6 @@
 ja:
   attributes:
     primary_item: 大項目
-    secondary_item: 中項目
     content: 内容
     price: 金額
-    memo: メモ
     created_at: 日時

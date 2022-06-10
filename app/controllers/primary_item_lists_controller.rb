@@ -1,14 +1,15 @@
 class PrimaryItemListsController < ApplicationController
+  before_action :admin_user_rejection
   before_action :logged_in_user
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
     @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
-    @primaryitemlist = PrimaryItemList.new
+    @primaryitemlist = current_user.primary_item_list.new
   end
 
   def create
-    @primaryitemlist = PrimaryItemList.new(primaryitemlist_params)
+    @primaryitemlist = current_user.primary_item_list.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
       flash[:success] = '保存しました。'
@@ -47,16 +48,15 @@ class PrimaryItemListsController < ApplicationController
   private
 
   def primaryitemlist_params
-    params.require(:primary_item_list).permit(:primary_item, :user_id)
+    params.require(:primary_item_list).permit(:primary_item)
   end
 
   # before_action
 
   def edit_permission_check
-    primaryitemlist = PrimaryItemList.find(params[:id])
-    return if current_user.id == primaryitemlist.user_id
+    return if current_user.primary_item_list.find_by(id: params[:id])
 
-    flash[:success] = '無効なURLです。'
+    flash[:notice] = '無効なURLです。'
     redirect_to root_path
   end
 end

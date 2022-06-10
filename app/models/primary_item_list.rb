@@ -12,8 +12,7 @@
 class PrimaryItemList < ApplicationRecord
   validates :user_id, presence: true
   validates :primary_item, presence: true
-  validates :initial_flag, inclusion: {in: [true, false]}
-
+  validates :initial_flag, inclusion: { in: [true, false] }
 
   has_many :spends
   belongs_to :user

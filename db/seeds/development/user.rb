@@ -147,4 +147,3 @@ Spend.create!(
     primary_item_list_id: primary.id
   )
 end
-

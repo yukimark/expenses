@@ -7,10 +7,9 @@
 #  primary_item(大項目)       :string           not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  user_id(userと紐づけ)      :integer          not null
+#  user_id(userと紐づけ)      :integer
 #
 class PrimaryItemList < ApplicationRecord
-  validates :user_id, presence: true
   validates :primary_item, presence: true
   validates :initial_flag, inclusion: { in: [true, false] }
 

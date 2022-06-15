@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
 
   create_table "primary_item_lists", comment: "出費の大項目リスト", force: :cascade do |t|
     t.string "primary_item", null: false, comment: "大項目"
-    t.integer "user_id", null: false, comment: "userと紐づけ"
+    t.integer "user_id", comment: "userと紐づけ"
     t.boolean "initial_flag", default: false, null: false, comment: "初期値の判定"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
   create_table "spends", comment: "支出を記録する", force: :cascade do |t|
     t.string "content", comment: "内容"
     t.integer "price", null: false, comment: "金額"
-    t.string "primary_item", null: false, comment: "大項目"
     t.integer "user_id", null: false, comment: "userと紐づけ"
     t.integer "primary_item_list_id", null: false, comment: "primary_item_listと紐づけ"
     t.datetime "created_at", precision: 6, null: false
@@ -34,7 +33,6 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.boolean "admin", default: false, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

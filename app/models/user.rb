@@ -3,7 +3,6 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  admin                  :boolean          default(FALSE), not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  remember_created_at    :datetime
@@ -24,5 +23,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :spends, dependent: :destroy
-  has_many :primary_item_list, dependent: :destroy
+  has_many :primary_item_lists, dependent: :destroy
 end

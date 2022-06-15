@@ -7,7 +7,7 @@
 #  primary_item(大項目)       :string           not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  user_id(userと紐づけ)      :integer          not null
+#  user_id(userと紐づけ)      :integer
 #
 require 'rails_helper'
 

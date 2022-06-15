@@ -6,4 +6,9 @@ class ApplicationController < ActionController::Base
   def admin_user_rejection
     redirect_to root_path, flash: { alert: '許可されていない操作です。' } if current_user.admin == true
   end
+
+  def transition_error
+    flash[:notice] = '無効なURLです。'
+    redirect_to root_path
+  end
 end

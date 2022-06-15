@@ -63,7 +63,6 @@ class SpendsController < ApplicationController
 
   def edit_permission_check
     return if current_user.spends.find_by(id: params[:id])
-    flash[:notice] = '無効なURLです。'
-    redirect_to root_path
+    transition_error
   end
 end

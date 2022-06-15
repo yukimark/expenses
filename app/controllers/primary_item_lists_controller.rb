@@ -55,8 +55,6 @@ class PrimaryItemListsController < ApplicationController
 
   def edit_permission_check
     return if current_user.primary_item_list.find_by(id: params[:id])
-
-    flash[:notice] = '無効なURLです。'
-    redirect_to root_path
+    transition_error
   end
 end

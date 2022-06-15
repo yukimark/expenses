@@ -7,10 +7,10 @@ class SpendsController < ApplicationController
     @spends = current_user.spends.order(created_at: :desc)
     @spend = current_user.spends.new
     @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
+    @primaryitem_default = true
   end
 
   def create
-    params[:spend][:primary_item] = PrimaryItemList.find_by(primary_item: '未分類', initial_flag: true).primary_item if params[:spend][:primary_item].empty?
     primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
     primary_item ||= current_user.primary_item_list.find_by(primary_item: params[:spend][:primary_item])
     @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item.id))
@@ -32,7 +32,6 @@ class SpendsController < ApplicationController
   end
 
   def update
-    params[:spend][:primary_item] = PrimaryItemList.find_by(primary_item: '未分類', initial_flag: true).primary_item if params[:spend][:primary_item].empty?
     primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
     primary_item ||= current_user.primary_item_list.find_by(primary_item: params[:spend][:primary_item])
     @spend = Spend.find(params[:id])

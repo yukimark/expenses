@@ -6,7 +6,10 @@
     .form-group.col-lg-6.col-xl-3
       = f.label :primary_item, class: 'form-label'
         = t('primary_item')
-      = f.collection_select :primary_item, @primaryitemlists, :primary_item, :primary_item, class: 'form-control', include_blank: ''
+        - if @primaryitem_default
+          = f.collection_select :primary_item, @primaryitemlists, :primary_item, :primary_item, class: 'form-control', selected: '未分類'
+        - else
+          = f.collection_select :primary_item, @primaryitemlists, :primary_item, :primary_item, class: 'form-control'
   .row
     .form-group.col-xl-3
       = f.label :content, class: 'form-label'

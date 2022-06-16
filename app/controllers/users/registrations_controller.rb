@@ -3,6 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  after_action :primary_item_list_initial_insert, only: [:create]
 
   # GET /resource/sign_up
   # def new
@@ -59,4 +60,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def primary_item_list_initial_insert
+    if user_signed_in?
+      initial_primary_items = [ '食費', '日用品', '趣味･娯楽', '交際費', '交通費', '衣服･美容', '健康･医療', '自動車', '教養･教育', '特別な支出', '現金･カード', '水道･光熱費', '通信費', '住宅', '税･社会保障', '保険', 'その他', '未分類' ]
+      initial_primary_items.each do |initial_primary_item|
+        current_user.primary_item_lists.create!(primary_item: initial_primary_item, initial_flag: 'true')
+      end
+    end
+  end
+
 end

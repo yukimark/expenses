@@ -1,5 +1,4 @@
 class SpendsController < ApplicationController
-  before_action :admin_user_rejection
   before_action :logged_in_user
   before_action :edit_permission_check, only: %i[edit update destroy]
 
@@ -12,7 +11,7 @@ class SpendsController < ApplicationController
 
   def create
     primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
-    primary_item ||= current_user.primary_item_list.find_by(primary_item: params[:spend][:primary_item])
+    primary_item ||= current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
     @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item.id))
     begin
       @spend.save!
@@ -33,7 +32,7 @@ class SpendsController < ApplicationController
 
   def update
     primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
-    primary_item ||= current_user.primary_item_list.find_by(primary_item: params[:spend][:primary_item])
+    primary_item ||= current_user.primary_item_lists
     @spend = Spend.find(params[:id])
     begin
       @spend.update!(spend_params.merge(primary_item_list_id: primary_item.id))

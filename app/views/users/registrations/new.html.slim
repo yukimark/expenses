@@ -1,5 +1,5 @@
 - provide(:title, 'トップ')
-h2 Sign up
+h2 = t('sign_up')
 = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = render "users/shared/error_messages", resource: resource
   .field
@@ -12,7 +12,8 @@ h2 Sign up
       em
         | (
         = @minimum_password_length
-        |  characters minimum)
+        = t('too_short')
+        |  )
     br
     = f.password_field :password, autocomplete: "new-password"
   .field
@@ -20,7 +21,7 @@ h2 Sign up
     br
     = f.password_field :password_confirmation, autocomplete: "new-password"
   .actions
-    = f.submit "Sign up"
+    = f.submit "#{ t('sign_up') }"
 = render "users/shared/links"
 
 / = form_with class: 'container', url: '/users', local: true do |f|

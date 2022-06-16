@@ -1,15 +1,14 @@
 class PrimaryItemListsController < ApplicationController
-  before_action :admin_user_rejection
   before_action :logged_in_user
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
     @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
-    @primaryitemlist = current_user.primary_item_list.new
+    @primaryitemlist = current_user.primary_item_lists.new
   end
 
   def create
-    @primaryitemlist = current_user.primary_item_list.new(primaryitemlist_params)
+    @primaryitemlist = current_user.primary_item_lists.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
       flash[:success] = '保存しました。'
@@ -32,7 +31,6 @@ class PrimaryItemListsController < ApplicationController
     @primaryitemlist = PrimaryItemList.find(params[:id])
     begin
       @primaryitemlist.update!(primaryitemlist_params)
-      Spend.where(primary_item_list_id: params[:id]).update_all(primary_item: primaryitemlist_params[:primary_item])
       flash[:success] = '保存しました。'
       redirect_to primary_item_lists_path
     rescue StandardError
@@ -54,7 +52,7 @@ class PrimaryItemListsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    return if current_user.primary_item_list.find_by(id: params[:id])
+    return if current_user.primary_item_lists.find_by(id: params[:id])
     transition_error
   end
 end

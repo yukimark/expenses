@@ -14,8 +14,8 @@ table.table.table-hover.table-bordered.container.mt-2
       tr 
         td = primaryitemlist.primary_item
         td
-          - if primaryitemlist.user_id == current_user.id 
+          - unless primaryitemlist.initial_flag
             = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
         td 
-          - if primaryitemlist.user_id == current_user.id 
+          - unless primaryitemlist.initial_flag 
             = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

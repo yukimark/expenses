@@ -23,6 +23,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :spends, dependent: :destroy
-
-  # acts_as_paranoid
+  has_many :primary_item_lists, dependent: :destroy
 end

@@ -3,19 +3,19 @@ class PrimaryItemListsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    @primaryitemlists = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
-    @primaryitemlist = PrimaryItemList.new
+    @primaryitemlists = current_user.primary_item_lists.order(:id)
+    @primaryitemlist = current_user.primary_item_lists.new
   end
 
   def create
-    @primaryitemlist = PrimaryItemList.new(primaryitemlist_params)
+    @primaryitemlist = current_user.primary_item_lists.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
       flash[:success] = '保存しました。'
       redirect_to action: 'index'
     rescue StandardError
       flash.now[:danger] = @primaryitemlist.error_message
-      @primaryitemlists  = PrimaryItemList.where(user_id: current_user.id).or(PrimaryItemList.where(initial_value: true)).order(:id)
+      @primaryitemlists  = current_user.primary_item_lists.order(:id)
       render :index
     end
   end
@@ -31,7 +31,6 @@ class PrimaryItemListsController < ApplicationController
     @primaryitemlist = PrimaryItemList.find(params[:id])
     begin
       @primaryitemlist.update!(primaryitemlist_params)
-      Spend.where(primary_item_id: params[:id]).update_all(primary_item: primaryitemlist_params[:primary_item])
       flash[:success] = '保存しました。'
       redirect_to primary_item_lists_path
     rescue StandardError
@@ -47,16 +46,14 @@ class PrimaryItemListsController < ApplicationController
   private
 
   def primaryitemlist_params
-    params.require(:primary_item_list).permit(:primary_item, :user_id)
+    params.require(:primary_item_list).permit(:primary_item)
   end
 
   # before_action
 
   def edit_permission_check
-    primaryitemlist = PrimaryItemList.find(params[:id])
-    return if current_user.id == primaryitemlist.user_id
+    return if current_user.primary_item_lists.find_by(id: params[:id], initial_flag: false)
 
-    flash[:success] = '無効なURLです。'
-    redirect_to root_path
+    transition_error
   end
 end

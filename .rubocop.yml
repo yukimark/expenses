@@ -144,3 +144,8 @@ Style/RedundantSelf:
 Layout/EmptyLineAfterGuardClause:
   Exclude:
     - app/controllers/spends_controller.rb
+
+#deviseの設定なので一旦除外
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+   - app/controllers/users/registrations_controller.rb

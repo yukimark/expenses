@@ -4,15 +4,11 @@
 #
 #  id                                              :bigint           not null, primary key
 #  content(内容)                                   :string
-#  deleted_at(論理削除用)                          :datetime
-#  memo(メモ)                                      :text
 #  price(金額)                                     :integer          not null
-#  primary_item(大項目)                            :string
-#  secondary_item(中項目)                          :string
 #  created_at                                      :datetime         not null
 #  updated_at                                      :datetime         not null
-#  primary_item_id(primary_item変更時の一括更新用) :integer
-#  user_id(ユーザーID)                             :integer          not null
+#  primary_item_list_id(primary_item_listと紐づけ) :integer          not null
+#  user_id(userと紐づけ)                           :integer          not null
 #
 require 'rails_helper'
 

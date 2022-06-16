@@ -5,13 +5,12 @@ class SpendsController < ApplicationController
   def index
     @spends = current_user.spends.order(created_at: :desc)
     @spend = current_user.spends.new
-    @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
+    @primaryitemlists = current_user.primary_item_lists.order(:id)
     @primaryitem_default = true
   end
 
   def create
-    primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
-    primary_item ||= current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
+    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
     @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item.id))
     begin
       @spend.save!
@@ -20,19 +19,18 @@ class SpendsController < ApplicationController
     rescue StandardError
       flash.now[:danger] = @spend.error_message
       @spends = current_user.spends.order(created_at: :desc)
-      @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
+      @primaryitemlists = current_user.primary_item_lists.order(:id)
       render :index
     end
   end
 
   def edit
     @spend = Spend.find(params[:id])
-    @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
+    @primaryitemlists = current_user.primary_item_lists.order(:id)
   end
 
   def update
-    primary_item = PrimaryItemList.find_by(primary_item: params[:spend][:primary_item], initial_flag: true)
-    primary_item ||= current_user.primary_item_lists
+    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
     @spend = Spend.find(params[:id])
     begin
       @spend.update!(spend_params.merge(primary_item_list_id: primary_item.id))
@@ -40,7 +38,7 @@ class SpendsController < ApplicationController
       redirect_to spends_path
     rescue StandardError
       flash.now[:danger] = @spend.error_message
-      @primaryitemlists = PrimaryItemList.initial_and_useroriginal(current_user.id)
+      @primaryitemlists = current_user.primary_item_lists.order(:id)
       render :edit
     end
   end
@@ -55,7 +53,7 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:primary_item, :content, :price, :user_id, :primary_item_list_id)
+    params.require(:spend).permit(:content, :price, :user_id, :primary_item_list_id)
   end
 
   # before_action

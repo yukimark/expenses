@@ -15,9 +15,4 @@ class PrimaryItemList < ApplicationRecord
 
   has_many :spends
   belongs_to :user
-
-  # 初期値とユーザー追加のデータ取得
-  def self.initial_and_useroriginal(user_id)
-    where('user_id = ? or initial_flag = ?', user_id, true).order(:id)
-  end
 end

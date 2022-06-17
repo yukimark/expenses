@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
   enable_extension "plpgsql"
 
   create_table "primary_item_lists", comment: "出費の大項目リスト", force: :cascade do |t|
-    t.string "primary_item", null: false, comment: "大項目"
+    t.string "name", null: false, comment: "大項目"
     t.integer "user_id", comment: "userと紐づけ"
     t.boolean "initial_flag", default: false, null: false, comment: "初期値の判定"
     t.datetime "created_at", precision: 6, null: false

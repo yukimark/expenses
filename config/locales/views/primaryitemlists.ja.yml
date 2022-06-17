@@ -4,5 +4,5 @@ ja:
   expenses: 'expenses(仮)'
   edit: 編集
   destroy: 削除
-  primary_item: 大項目
+  name: 大項目
   created_at: 日時

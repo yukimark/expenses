@@ -46,14 +46,12 @@ class PrimaryItemListsController < ApplicationController
   private
 
   def primaryitemlist_params
-    params.require(:primary_item_list).permit(:primary_item)
+    params.require(:primary_item_list).permit(:name, :user_id)
   end
 
   # before_action
 
   def edit_permission_check
-    return if current_user.primary_item_lists.find_by(id: params[:id], initial_flag: false)
-
-    transition_error
+    transition_error if current_user.primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
   end
 end

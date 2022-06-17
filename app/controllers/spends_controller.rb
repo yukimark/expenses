@@ -10,7 +10,7 @@ class SpendsController < ApplicationController
   end
 
   def create
-    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
+    primary_item = current_user.primary_item_lists.find_by(name: params[:spend][:name])
     @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item.id))
     begin
       @spend.save!
@@ -30,7 +30,7 @@ class SpendsController < ApplicationController
   end
 
   def update
-    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
+    primary_item = current_user.primary_item_lists.find_by(name: params[:spend][:name])
     @spend = Spend.find(params[:id])
     begin
       @spend.update!(spend_params.merge(primary_item_list_id: primary_item.id))
@@ -59,7 +59,6 @@ class SpendsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    return if current_user.spends.find_by(id: params[:id])
-    transition_error
+    transition_error if current_user.spends.find_by(id: params[:id]).blank?
   end
 end

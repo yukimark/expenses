@@ -3,15 +3,14 @@ class SpendsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
+    selected_default = current_user.primary_item_lists.find_by(name: '未分類', initial_flag: true).id
     @spends = current_user.spends.order(created_at: :desc)
-    @spend = current_user.spends.new
+    @spend = current_user.spends.new(primary_item_list_id: selected_default)
     @primaryitemlists = current_user.primary_item_lists.order(:id)
-    @primaryitem_default = true
   end
 
   def create
-    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
-    @spend = current_user.spends.new(spend_params.merge(primary_item_list_id: primary_item.id))
+    @spend = current_user.spends.new(spend_params)
     begin
       @spend.save!
       flash[:success] = '保存しました。'
@@ -30,10 +29,9 @@ class SpendsController < ApplicationController
   end
 
   def update
-    primary_item = current_user.primary_item_lists.find_by(primary_item: params[:spend][:primary_item])
     @spend = Spend.find(params[:id])
     begin
-      @spend.update!(spend_params.merge(primary_item_list_id: primary_item.id))
+      @spend.update!(spend_params)
       flash[:success] = '保存しました。'
       redirect_to spends_path
     rescue StandardError
@@ -53,13 +51,12 @@ class SpendsController < ApplicationController
   private
 
   def spend_params
-    params.require(:spend).permit(:content, :price, :user_id, :primary_item_list_id)
+    params.require(:spend).permit(:content, :price, :primary_item_list_id, :user_id)
   end
 
   # before_action
 
   def edit_permission_check
-    return if current_user.spends.find_by(id: params[:id])
-    transition_error
+    transition_error if current_user.spends.find_by(id: params[:id]).blank?
   end
 end

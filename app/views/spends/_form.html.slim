@@ -4,12 +4,9 @@
 = form_with class: 'container', model: @spend, local: true do |f|
   .row
     .form-group.col-lg-6.col-xl-3
-      = f.label :primary_item, class: 'form-label'
-        = t('primary_item')
-        - if @primaryitem_default
-          = f.collection_select :primary_item, @primaryitemlists, :primary_item, :primary_item, class: 'form-control', selected: '未分類'
-        - else
-          = f.collection_select :primary_item, @primaryitemlists, :primary_item, :primary_item, class: 'form-control', selected: @spend.primary_item_list.primary_item
+      = f.label :primary_item_list_id, class: 'form-label'
+        = t('name')
+        = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, class: 'form-control', selected: @spend.primary_item_list_id
   .row
     .form-group.col-xl-3
       = f.label :content, class: 'form-label'

@@ -10,7 +10,7 @@
 #  user_id(userと紐づけ)      :integer
 #
 class PrimaryItemList < ApplicationRecord
-  validates :primary_item, presence: true
+  validates :name, presence: true
   validates :initial_flag, inclusion: { in: [true, false] }
 
   has_many :spends

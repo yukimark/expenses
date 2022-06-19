@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   end
 
   def transition_error
-    flash[:notice] = '無効なURLです。'
-    redirect_to root_path
+    redirect_to root_path, flash: { notice: '無効なURLです。' }
   end
 
   def current_primary_item_lists

@@ -3,7 +3,7 @@ class SpendsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    primary_item_list_id = primary_item_list_id_default
+    primary_item_list_id = default_primaty_item_list_id
     @spends = current_spends.order(created_at: :desc)
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primaryitemlists = current_primary_item_lists.order(:id)
@@ -24,7 +24,7 @@ class SpendsController < ApplicationController
 
   def edit
     @spend = Spend.find(params[:id])
-    @spend.primary_item_list_id ||= primary_item_list_id_default
+    @spend.primary_item_list_id ||= default_primaty_item_list_id
     @primaryitemlists = current_primary_item_lists.order(:id)
   end
 
@@ -52,7 +52,7 @@ class SpendsController < ApplicationController
     params.require(:spend).permit(:content, :price, :primary_item_list_id, :user_id)
   end
 
-  def primary_item_list_id_default
+  def default_primaty_item_list_id
     current_primary_item_lists.find_by(name: '未分類').id
   end
 

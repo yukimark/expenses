@@ -70,8 +70,8 @@ gem 'rubocop-rails', require:false
 gem 'slim-rails'
 gem 'html2slim'
 # cssフレームワーク
-gem 'bootstrap'
-gem 'jquery-rails'
+# gem 'bootstrap'
+# gem 'jquery-rails'
 # デバッグ用
 gem 'pry-rails'
 # テーブルの情報をmodelに書き出してくれる

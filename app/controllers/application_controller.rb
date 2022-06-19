@@ -7,4 +7,12 @@ class ApplicationController < ActionController::Base
     flash[:notice] = '無効なURLです。'
     redirect_to root_path
   end
+
+  def current_primary_item_lists
+    @_current_primary_item_lists ||= current_user.primary_item_lists
+  end
+
+  def current_spends
+    @_current_spends ||= current_user.spends
+  end
 end

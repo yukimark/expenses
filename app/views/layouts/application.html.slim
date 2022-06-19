@@ -7,6 +7,7 @@ html lang='ja'
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
   body.bg-light
     header.pt-3.bg-success.bg-gradient
       div.container.d-flex.flex-row.justify-content-between
@@ -26,15 +27,17 @@ html lang='ja'
         ul.list-group.d-flex.flex-row
           li.list-group-item= link_to 'トップ', root_path
           li.list-group-item= link_to '家計', spends_path
-          li.list-group-item= link_to '設定', '#'
+          li.list-group-item= link_to '設定', setting_path
     main.container.mt-5
       - flash.each do |message_type, message|
         - if message_type == 'alert'
-          div.container.alert.alert-danger
+          div.container.alert.alert-danger.alert-dismissible.fade.show
             = message
+            button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
         - elsif message_type == 'notice'
-          div.container.alert.alert-success
+          div.container.alert.alert-success.alert-dismissible.fade.show
             = message
+            button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
       = yield
     footer.bg-success.bg-gradient.mt-5
       dev.container

@@ -127,6 +127,7 @@ Metrics/BlockLength:
     - lib/tasks/auto_annotate_models.rake
     # 一旦除外
     - config/environments/development.rb
+    - spec/requests/primary_item_lists_spec.rb
     - spec/system/spends_spec.rb
 
 
@@ -143,3 +144,8 @@ Style/RedundantSelf:
 Layout/EmptyLineAfterGuardClause:
   Exclude:
     - app/controllers/spends_controller.rb
+
+#deviseの設定なので一旦除外
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+   - app/controllers/users/registrations_controller.rb

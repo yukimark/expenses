@@ -1,25 +1,22 @@
+- provide(:title, '出費編集')
 h2.mb-3 出費入力
 = render partial: 'form'
 h2.mt-5 出費一覧
-table.table.table-hover.table-bordered.container.mt-2
-  thead 
+table.table.table-hover.table-bordered.mt-2.container
+  thead.table-success
     tr 
       th.col-2 =t('created_at')
       th =t('primary_item')
-      th =t('secondary_item')
       th =t('content')
       th =t('price')
-      th.col-4 =t('memo')
       th =t('edit')
       th =t('destroy')
   tbody 
     - @spends.each do |spend|
       tr 
-        td.row-2 = spend.created_at.to_s(:datetime_jp)
-        td = spend.primary_item 
-        td = spend.secondary_item 
+        td.col-2 = spend.created_at.to_s(:datetime_jp)
+        td = spend.primary_item_list.try(:name)
         td = spend.content 
         td.text-end = spend.price.to_s(:delimited)
-        td = spend.memo
         td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
         td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'

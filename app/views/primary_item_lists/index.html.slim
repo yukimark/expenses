@@ -1,0 +1,21 @@
+- provide(:title, '大項目一覧')
+h2 大項目一覧、追加、編集、削除
+
+= render partial: 'form'
+
+table.table.table-hover.table-bordered.container.mt-2
+  thead.table-success
+    tr 
+      th =t('name')
+      th =t('edit')
+      th =t('destroy')
+  tbody 
+    - @primaryitemlists.each do |primaryitemlist|
+      tr 
+        td = primaryitemlist.name
+        td
+          - unless primaryitemlist.initial_flag
+            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
+        td 
+          - unless primaryitemlist.initial_flag 
+            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}, class: 'btn btn-danger'

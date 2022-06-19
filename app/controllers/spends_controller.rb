@@ -53,7 +53,7 @@ class SpendsController < ApplicationController
   end
 
   def primary_item_list_id_default
-    return current_primary_item_lists.find_by(name: '未分類').id
+    current_primary_item_lists.find_by(name: '未分類').id
   end
 
   # before_action

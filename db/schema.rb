@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
     t.boolean "initial_flag", default: false, null: false, comment: "初期値の判定"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "user_id"], name: "index_primary_item_lists_on_name_and_user_id", unique: true
   end
 
   create_table "spends", comment: "支出を記録する", force: :cascade do |t|
     t.string "content", comment: "内容"
     t.integer "price", null: false, comment: "金額"
     t.integer "user_id", null: false, comment: "userと紐づけ"
-    t.integer "primary_item_list_id", null: false, comment: "primary_item_listと紐づけ"
+    t.integer "primary_item_list_id", comment: "primary_item_listと紐づけ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

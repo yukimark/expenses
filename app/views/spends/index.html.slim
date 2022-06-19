@@ -6,7 +6,7 @@ table.table.table-hover.table-bordered.mt-2.container
   thead.table-success
     tr 
       th.col-2 =t('created_at')
-      th =t('name')
+      th =t('primary_item')
       th =t('content')
       th =t('price')
       th =t('edit')
@@ -15,7 +15,7 @@ table.table.table-hover.table-bordered.mt-2.container
     - @spends.each do |spend|
       tr 
         td.col-2 = spend.created_at.to_s(:datetime_jp)
-        td = spend.primary_item_list.name
+        td = spend.primary_item_list.try(:name)
         td = spend.content 
         td.text-end = spend.price.to_s(:delimited)
         td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'

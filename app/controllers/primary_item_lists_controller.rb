@@ -3,19 +3,18 @@ class PrimaryItemListsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    @primaryitemlists = current_user.primary_item_lists.order(:id)
-    @primaryitemlist = current_user.primary_item_lists.new
+    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primaryitemlist = current_primary_item_lists.new
   end
 
   def create
-    @primaryitemlist = current_user.primary_item_lists.new(primaryitemlist_params)
+    @primaryitemlist = current_primary_item_lists.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
-      flash[:success] = '保存しました。'
-      redirect_to action: 'index'
+      redirect_to primary_item_lists_path, flash: { success: '保存しました。' }
     rescue StandardError
+      @primaryitemlists  = current_primary_item_lists.order(:id)
       flash.now[:danger] = @primaryitemlist.error_message
-      @primaryitemlists  = current_user.primary_item_lists.order(:id)
       render :index
     end
   end
@@ -23,16 +22,14 @@ class PrimaryItemListsController < ApplicationController
   def destroy
     @primaryitemlist = PrimaryItemList.find(params[:id])
     @primaryitemlist.destroy
-    flash[:success] = '削除しました。'
-    redirect_to primary_item_lists_path
+    redirect_to primary_item_lists_path, flash: { success: '削除しました。' }
   end
 
   def update
     @primaryitemlist = PrimaryItemList.find(params[:id])
     begin
       @primaryitemlist.update!(primaryitemlist_params)
-      flash[:success] = '保存しました。'
-      redirect_to primary_item_lists_path
+      redirect_to primary_item_lists_path, flash: { success: '保存しました。' }
     rescue StandardError
       flash.now[:danger] = @primaryitemlist.error_message
       render :edit
@@ -52,6 +49,6 @@ class PrimaryItemListsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    transition_error if current_user.primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
+    transition_error if current_primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
   end
 end

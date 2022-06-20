@@ -3,8 +3,8 @@ h2 大項目一覧、追加、編集、削除
 
 = render partial: 'form'
 
-table.table.table-hover.table-bordered.container.mt-2
-  thead.table-success
+table
+  thead
     tr 
       th =t('name')
       th =t('edit')
@@ -15,7 +15,7 @@ table.table.table-hover.table-bordered.container.mt-2
         td = primaryitemlist.name
         td
           - unless primaryitemlist.initial_flag
-            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
+            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist)
         td 
           - unless primaryitemlist.initial_flag 
-            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}, class: 'btn btn-danger'
+            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}

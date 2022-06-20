@@ -1,23 +1,20 @@
 - flash.each do |message_type, message|
-  div class="container alert alert-#{message_type} alert-dismissible fade show"
+  div class="alert alert-#{message_type} alert-dismissible fade show"
     = message
     button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
-= form_with class: 'container', model: @spend, local: true do |f|
-  .row
-    .form-group.col-lg-6.col-xl-3
-      = f.label :primary_item_list_id, class: 'form-label'
-        = t('primary_item')
-        = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, class: 'form-control', selected: @spend.primary_item_list_id
-  .row
-    .form-group.col-xl-3
-      = f.label :content, class: 'form-label'
-        = t('content')
-      = f.text_field :content, class: 'form-control', placeholder: '例:パンとジュース'
-  .row 
-    .form-group.col-xl-3
-      = f.label :price, class: 'form-label'
-        = t('price')
-        span.badge.bg-danger.ms-1.rounded-pill
-          | 必須
-      = f.text_field :price, class: "form-control #{ 'is-invalid' if @spend.error_message != '' }", placeholder: '最大12桁'
-  = f.submit nil,class: 'btn btn-primary mt-3'
+= form_with model: @spend, local: true do |f|
+  .form-group
+    = f.label :primary_item_list_id
+      = t('primary_item')
+      = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, selected: @spend.primary_item_list_id
+  .form-group
+    = f.label :content
+      = t('content')
+    = f.text_field :content, placeholder: '例:パンとジュース'
+  .form-group
+    = f.label :price
+      = t('price')
+      span.badge.bg-danger.ms-1.rounded-pill
+        | 必須
+    = f.text_field :price, class: "#{ 'is-invalid' if @spend.error_message != '' }", placeholder: '最大12桁'
+  = f.submit nil

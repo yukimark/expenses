@@ -1,22 +1,24 @@
 - provide(:title, '出費編集')
-h2 出費入力
-= render partial: 'form'
-h2 出費一覧
-table
-  thead
-    tr 
-      th =t('created_at')
-      th =t('primary_item')
-      th =t('content')
-      th =t('price')
-      th =t('edit')
-      th =t('destroy')
-  tbody 
-    - @spends.each do |spend|
+div.form-box
+  h2 出費入力
+  = render partial: 'form'
+div.index-table
+  h2 出費一覧
+  table
+    thead
       tr 
-        td = spend.created_at.to_s(:datetime_jp)
-        td = spend.primary_item_list.try(:name)
-        td = spend.content 
-        td = spend.price.to_s(:delimited)
-        td = link_to t('edit'), edit_spend_path(spend)
-        td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}
+        th =t('created_at')
+        th =t('primary_item')
+        th =t('content')
+        th =t('price')
+        th =t('edit')
+        th =t('destroy')
+    tbody 
+      - @spends.each do |spend|
+        tr
+          td.td-created_at = spend.created_at.to_s(:datetime_jp)
+          td.td-primary_item = spend.primary_item_list.try(:name)
+          td = spend.content 
+          td.td-spend = spend.price.to_s(:delimited)
+          td.td-edit = link_to t('edit'), edit_spend_path(spend)
+          td.td-destroy = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}

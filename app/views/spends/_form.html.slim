@@ -2,19 +2,22 @@
   div class="alert alert-#{message_type} alert-dismissible fade show"
     = message
     button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
-= form_with model: @spend, local: true do |f|
+= form_with class: 'form', model: @spend, local: true do |f|
   .form-group
     = f.label :primary_item_list_id
       = t('primary_item')
-      = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, selected: @spend.primary_item_list_id
+    br
+    = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, selected: @spend.primary_item_list_id
   .form-group
     = f.label :content
       = t('content')
-    = f.text_field :content, placeholder: '例:パンとジュース'
+    br
+    = f.text_field :content, class: 'txt-box', placeholder: '例:パンとジュース'
   .form-group
     = f.label :price
       = t('price')
       span.badge.bg-danger.ms-1.rounded-pill
         | 必須
-    = f.text_field :price, class: "#{ 'is-invalid' if @spend.error_message != '' }", placeholder: '最大12桁'
-  = f.submit nil
+    br
+    = f.text_field :price, class: "txt-box", placeholder: '最大12桁'
+  = f.submit nil, class: 'submit'

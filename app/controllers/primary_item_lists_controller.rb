@@ -3,7 +3,7 @@ class PrimaryItemListsController < ApplicationController
   before_action :edit_permission_check, only: %i[edit update destroy]
 
   def index
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
     @primaryitemlist = current_primary_item_lists.new
   end
 
@@ -13,7 +13,7 @@ class PrimaryItemListsController < ApplicationController
       @primaryitemlist.save!
       redirect_to primary_item_lists_path, flash: { success: '保存しました。' }
     rescue StandardError
-      @primaryitemlists  = current_primary_item_lists.order(:id)
+      @primaryitemlists  = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @primaryitemlist.error_message
       render :index
     end

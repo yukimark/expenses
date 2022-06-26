@@ -18,5 +18,9 @@ class PrimaryItemList < ApplicationRecord
   validates :initial_flag, inclusion: { in: [true, false] }
 
   has_many :spends, dependent: :nullify
-  belongs_to :user
+  belongs_to :user, optional: true
+
+  def self.where_user_id_initial_flag(user_id)
+    self.where('user_id = ? or initial_flag = ?', user_id, true).order(:id)
+  end
 end

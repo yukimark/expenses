@@ -6,7 +6,7 @@ class SpendsController < ApplicationController
     primary_item_list_id = default_primaty_item_list_id
     @spends = current_spends.order(created_at: :desc)
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
   end
 
   def create
@@ -16,7 +16,7 @@ class SpendsController < ApplicationController
       redirect_to spends_path, flash: { success: '保存しました。' }
     rescue StandardError
       @spends = current_spends.order(created_at: :desc)
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @spend.error_message
       render :index
     end
@@ -25,7 +25,7 @@ class SpendsController < ApplicationController
   def edit
     @spend = Spend.find(params[:id])
     @spend.primary_item_list_id ||= default_primaty_item_list_id
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
   end
 
   def update
@@ -34,7 +34,7 @@ class SpendsController < ApplicationController
       @spend.update!(spend_params)
       redirect_to spends_path, flash: { success: '更新しました。' }
     rescue StandardError
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @spend.error_message
       render :edit
     end
@@ -53,7 +53,7 @@ class SpendsController < ApplicationController
   end
 
   def default_primaty_item_list_id
-    current_primary_item_lists.find_by(name: '未分類').id
+    PrimaryItemList.find_by(name: '未分類', initial_flag: true).id
   end
 
   # before_action

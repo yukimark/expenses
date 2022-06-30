@@ -19,10 +19,10 @@ div.index-table
   table
     thead
       tr 
-        th =t('created_at')
+        th = sort_link(@q, :created_at, t('created_at'))
         th =t('primary_item')
         th =t('content')
-        th =t('price')
+        th = sort_link(@q, :price, t('price'))
         th =t('edit')
         th =t('destroy')
     tbody 

@@ -119,11 +119,6 @@ footer {
   }
 }
 
-.form2 {
-  @extend .form;
-  margin-top: 10px;
-}
-
 .form-box {
   padding: {
     top: 20px;
@@ -194,5 +189,11 @@ footer {
   }
   .short-table {
     width: 400px;
+  }
+}
+
+.list {
+  .list-item {
+    margin-bottom: 3px;
   }
 }

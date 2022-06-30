@@ -1,6 +1,6 @@
 - provide(:title, '出費編集')
 div.form-box
-  h2 出費入力
+  h2 支出入力
   = render partial: 'form'
 div.form-box
   h2 検索コーナー
@@ -15,7 +15,7 @@ div.form-box
       = f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'date-box'
     = f.submit class: 'submit'
 div.index-table
-  h2 出費一覧
+  h2 支出一覧
   table
     thead
       tr 

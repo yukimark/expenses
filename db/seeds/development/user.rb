@@ -4,7 +4,7 @@ user1 = User.create!(
   password_confirmation: 'passpass'
 )
 
-user2 = User.create!(
+User.create!(
   email: 'example02@gmail.com',
   password: 'passpass',
   password_confirmation: 'passpass'

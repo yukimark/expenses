@@ -100,12 +100,22 @@ footer {
       width: 300px;
       height: 40px;
     }
+    .date-box{
+      height: 35px;
+      width: 150px;
+    }
+    p {
+      margin-bottom: 0.3rem;
+    }
   }
   .submit {
     margin: {
       top: 10px;
       bottom: 10px;
     }
+  }
+  .submit-margin {
+    margin-left: 10px;
   }
 }
 
@@ -179,5 +189,11 @@ footer {
   }
   .short-table {
     width: 400px;
+  }
+}
+
+.list {
+  .list-item {
+    margin-bottom: 3px;
   }
 }

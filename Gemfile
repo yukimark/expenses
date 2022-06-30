@@ -87,3 +87,5 @@ gem 'devise'
 gem 'devise-i18n'
 # ページネーション
 gem 'kaminari'
+# 検索機能
+gem 'ransack'

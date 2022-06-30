@@ -11,7 +11,7 @@ class PrimaryItemListsController < ApplicationController
     @primaryitemlist = current_primary_item_lists.new(primaryitemlist_params)
     begin
       @primaryitemlist.save!
-      redirect_to primary_item_lists_path, flash: { success: '保存しました。' }
+      redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
       @primaryitemlists  = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @primaryitemlist.error_message
@@ -22,14 +22,14 @@ class PrimaryItemListsController < ApplicationController
   def destroy
     @primaryitemlist = PrimaryItemList.find(params[:id])
     @primaryitemlist.destroy
-    redirect_to primary_item_lists_path, flash: { success: '削除しました。' }
+    redirect_to primary_item_lists_path, flash: { success: t('destroy_message') }
   end
 
   def update
     @primaryitemlist = PrimaryItemList.find(params[:id])
     begin
       @primaryitemlist.update!(primaryitemlist_params)
-      redirect_to primary_item_lists_path, flash: { success: '保存しました。' }
+      redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
       flash.now[:danger] = @primaryitemlist.error_message
       render :edit

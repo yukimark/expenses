@@ -4,3 +4,6 @@ ja:
   expenses: 'expenses(仮)'
   edit: 編集
   destroy: 削除
+  success_message: '保存しました。'
+  destroy_message: '削除しました。'
+  update_message: '更新しました。'

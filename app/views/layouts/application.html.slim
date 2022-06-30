@@ -13,7 +13,7 @@ html lang='ja'
       header
         div.header
           div.header-logo
-            h1= link_to t('expenses'), root_path
+            h1 = link_to t('expenses'), root_path
           div.header-link
             - if user_signed_in?
               ul
@@ -21,14 +21,14 @@ html lang='ja'
                   = link_to 'ログアウト', destroy_user_session_path, method: :delete
             - else
               ul
-                li= link_to t('signup'), new_user_registration_path
-                li= link_to t('login'), new_user_session_path
+                li = link_to t('signup'), new_user_registration_path
+                li = link_to t('login'), new_user_session_path
       - if user_signed_in?
         nav
           ul
-            li= link_to 'トップ', root_path
-            li= link_to '支出', spends_path
-            li= link_to '設定', setting_path
+            li = link_to 'トップ', root_path
+            li = link_to '支出', spends_path
+            li = link_to '設定', setting_path
       main.main
         - flash.each do |message_type, message|
           - if message_type == 'alert'

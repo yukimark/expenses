@@ -16,15 +16,18 @@ div.form-box
     = f.submit class: 'submit'
 div.index-table
   h2 支出一覧
+  div.kaminari
+    = paginate @spends
+    = page_entries_info @spends
   table
     thead
       tr 
         th = sort_link(@q, :created_at, t('created_at'))
-        th =t('primary_item')
-        th =t('content')
+        th = t('primary_item')
+        th = t('content')
         th = sort_link(@q, :price, t('price'))
-        th =t('edit')
-        th =t('destroy')
+        th = t('edit')
+        th = t('destroy')
     tbody 
       - @spends.each do |spend|
         tr

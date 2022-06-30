@@ -2,6 +2,18 @@
 div.form-box
   h2 出費入力
   = render partial: 'form'
+div.form-box
+  h2 検索コーナー
+  = search_form_for @q, class: 'form' do |f|
+    .form-group
+      p 大項目で検索(部分一致)
+      = f.search_field :primary_item_list_name_cont, class: 'txt-box'
+    .form-group
+      p 期間指定で検索
+      = f.date_field :created_at_gteq, include_blank: true, class: 'date-box'
+      span ~
+      = f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'date-box'
+    = f.submit class: 'submit'
 div.index-table
   h2 出費一覧
   table

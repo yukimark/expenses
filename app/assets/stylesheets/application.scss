@@ -100,6 +100,13 @@ footer {
       width: 300px;
       height: 40px;
     }
+    .date-box{
+      height: 35px;
+      width: 150px;
+    }
+    p {
+      margin-bottom: 0.3rem;
+    }
   }
   .submit {
     margin: {
@@ -107,6 +114,14 @@ footer {
       bottom: 10px;
     }
   }
+  .submit-margin {
+    margin-left: 10px;
+  }
+}
+
+.form2 {
+  @extend .form;
+  margin-top: 10px;
 }
 
 .form-box {

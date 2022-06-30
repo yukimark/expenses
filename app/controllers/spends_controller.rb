@@ -4,9 +4,10 @@ class SpendsController < ApplicationController
 
   def index
     primary_item_list_id = default_primaty_item_list_id
-    @spends = current_spends.order(created_at: :desc)
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+    @q = current_spends.ransack(params[:q])
+    @spends = @q.result.includes(:primary_item_list).order(created_at: :desc)
   end
 
   def create

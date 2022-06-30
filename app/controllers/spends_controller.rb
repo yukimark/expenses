@@ -7,17 +7,17 @@ class SpendsController < ApplicationController
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
     @q = current_spends.ransack(params[:q])
-    @spends = @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+    @spends = ransack_option(@q)
   end
 
   def create
     @spend = current_spends.new(spend_params)
     begin
       @spend.save!
-      redirect_to spends_path, flash: { success: '保存しました。' }
+      redirect_to spends_path, flash: { success: t('success_message') }
     rescue StandardError
       @q = current_spends.ransack(params[:q])
-      @spends = @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+      @spends = ransack_option(@q)
       @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @spend.error_message
       render :index
@@ -34,7 +34,7 @@ class SpendsController < ApplicationController
     @spend = Spend.find(params[:id])
     begin
       @spend.update!(spend_params)
-      redirect_to spends_path, flash: { success: '更新しました。' }
+      redirect_to spends_path, flash: { success: t('update_message') }
     rescue StandardError
       @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @spend.error_message
@@ -45,7 +45,7 @@ class SpendsController < ApplicationController
   def destroy
     @spend = Spend.find(params[:id])
     @spend.destroy
-    redirect_to spends_path, flash: { success: '削除しました。' }
+    redirect_to spends_path, flash: { success: t('destroy_message') }
   end
 
   private
@@ -56,6 +56,10 @@ class SpendsController < ApplicationController
 
   def default_primaty_item_list_id
     PrimaryItemList.find_by(name: '未分類', initial_flag: true).id
+  end
+
+  def ransack_option(q)
+    q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 
   # before_action

@@ -16,9 +16,13 @@
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+// 変数等
+
 $common-border-bottom: 2px solid blue;
 $common-background-green: lighten(green, 70%);
 $common-background-grey: lighten(grey, 45%);
+
+// リセットCSS的な
 
 .base {
   background-color: #FFFFEE;
@@ -33,6 +37,8 @@ li {
   margin: 0 auto 0;
   background-color: white;
 }
+
+// コンテンツ
 
 .header {
   background-color: $common-background-green;

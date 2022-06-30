@@ -7,7 +7,7 @@ class SpendsController < ApplicationController
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
     @q = current_spends.ransack(params[:q])
-    @spends = @q.result.includes(:primary_item_list).order(created_at: :desc)
+    @spends = @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 
   def create
@@ -16,7 +16,8 @@ class SpendsController < ApplicationController
       @spend.save!
       redirect_to spends_path, flash: { success: '保存しました。' }
     rescue StandardError
-      @spends = current_spends.order(created_at: :desc)
+      @q = current_spends.ransack(params[:q])
+      @spends = @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
       @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
       flash.now[:danger] = @spend.error_message
       render :index

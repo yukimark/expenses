@@ -16,6 +16,9 @@ div.form-box
     = f.submit class: 'submit'
 div.index-table
   h2 支出一覧
+  div.kaminari
+    = paginate @spends
+    = page_entries_info @spends
   table
     thead
       tr 

@@ -144,6 +144,16 @@ footer {
     margin-bottom: 20px;
     border-bottom: $common-border-bottom;
   }
+  .kaminari {
+    margin-bottom: 10px;
+    .pagination {
+      span {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+    }
+    
+  }
   table {
     border: 1px solid;
     width: 800px;

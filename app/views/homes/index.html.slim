@@ -1,6 +1,37 @@
 - provide(:title, 'トップ')
 - if user_signed_in?
   p ログインしてる人:#{ current_user.email }
+  div.index-table
+    h2 今月の支出合計
+    table 
+      tbody 
+        tr 
+          th 今月の支出合計
+          td.td-spend = @spendsum.to_s(:delimited)
+    h2 詳細
+    table 
+      thead 
+        tr 
+          th 項目名
+          th 先月の支出
+          th 今月の支出合計
+          th 今月の支出目標値
+          th 目標値との比較
+      tbody 
+        tr 
+          th 合計
+          td.td-spend = @spendsprevmonth.sum(:price).to_s(:delimited)
+          td.td-spend = @spendsum.to_s(:delimited)
+          td 
+          td 
+        - @primaryitemlists.each do |primaryitemlist|
+            tr 
+              th = primaryitemlist.name
+              td.td-spend = @spendsprevmonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
+              td.td-spend = @spendsthismonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
+              td 
+              td
+
 h2 Homes#index
 p いろいろまとめ的なものを作る予定
 
@@ -9,3 +40,4 @@ ul
   li 今月と先月の支出を集計する機能(全ての合計と大項目ごとの合計)
   li 目標値を設定して、それとの比較
   li 収入を入力できるようにする、収入と支出を比較できるようにする
+  li 

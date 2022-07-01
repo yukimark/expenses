@@ -180,6 +180,9 @@ footer {
           border: 1px solid;
           padding-left: 3px;
         }
+        th {
+          @extend td;
+        }
         &:hover td {
           background-color: $common-background-grey;
         }

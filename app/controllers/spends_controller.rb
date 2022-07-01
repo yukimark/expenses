@@ -58,8 +58,8 @@ class SpendsController < ApplicationController
     PrimaryItemList.find_by(name: '未分類', initial_flag: true).id
   end
 
-  def ransack_option(q)
-    q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+  def ransack_option(ransack)
+    ransack.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 
   # before_action

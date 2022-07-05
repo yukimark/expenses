@@ -13,7 +13,7 @@ html lang='ja'
       header
         div.header
           div.header-logo
-            h1 = link_to t('expenses'), root_path
+            h1 = link_to image_tag('expenses_logo.png'), root_path
           div.header-link
             - if user_signed_in?
               ul
@@ -42,4 +42,4 @@ html lang='ja'
         = yield
       footer
         dev
-          p フッターを作る予定
+          p &copy 2022 yukimark

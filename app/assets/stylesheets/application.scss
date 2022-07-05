@@ -46,11 +46,6 @@ li {
   justify-content: space-between;
   padding: 10px 20px;
   align-items: center;
-  .header-logo {
-    a {
-      text-decoration: none;
-    }
-  }
   .header-link {
     padding-top: 15px;
     ul {
@@ -90,6 +85,9 @@ footer {
   background-color: $common-background-green;
   padding-left: 20px;
   margin-top: 30px;
+  p {
+    text-align: center;
+  }
 }
 
 .form{
@@ -213,6 +211,12 @@ footer {
 
 .list {
   .list-item {
-    margin-bottom: 3px;
+    margin-bottom: 10px;
+  }
+}
+
+.main-image {
+  img {
+    width: 1060px;
   }
 }

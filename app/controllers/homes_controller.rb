@@ -6,7 +6,7 @@ class HomesController < ApplicationController
     @spendsthismonth = current_spends.where(created_at: d.in_time_zone.all_month)
     @spendsprevmonth = current_spends.where(created_at: d.prev_month.in_time_zone.all_month)
     @spendsum = @spendsthismonth.sum(:price)
-    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+    @primaryitemlists = current_primary_item_lists.order(:id)
   end
 
   def setting; end

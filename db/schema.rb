@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_110506) do
     t.string "name", null: false, comment: "大項目"
     t.integer "user_id", comment: "userと紐づけ"
     t.boolean "initial_flag", default: false, null: false, comment: "初期値の判定"
+    t.integer "spend_target_value", default: 0, null: false, comment: "支出の目標値"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name", "user_id"], name: "index_primary_item_lists_on_name_and_user_id", unique: true

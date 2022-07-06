@@ -15,22 +15,23 @@
           th 項目名
           th 先月の支出
           th 今月の支出合計
-          th 今月の支出目標値
+          th 今月の支出目標
           th 目標値との比較
       tbody 
         tr 
           th 合計
           td.td-spend = @spendsprevmonth.sum(:price).to_s(:delimited)
           td.td-spend = @spendsum.to_s(:delimited)
-          td 
-          td 
+          td.td-spend = @spendtargetvaluesum.to_s(:delimited)
+          td.td-spend = (@spendtargetvaluesum - @spendsum).to_s(:delimited)
         - @primaryitemlists.each do |primaryitemlist|
-            tr 
-              th = primaryitemlist.name
-              td.td-spend = @spendsprevmonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
-              td.td-spend = @spendsthismonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
-              td 
-              td
+          - spendsthismonth_primaryitemlistid = @spendsthismonth.where(primary_item_list_id: primaryitemlist.id).sum(:price)
+          tr 
+            th = primaryitemlist.name
+            td.td-spend = @spendsprevmonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
+            td.td-spend = spendsthismonth_primaryitemlistid.to_s(:delimited)
+            td.td-spend = primaryitemlist.spend_target_value.to_s(:delimited)
+            td.td-spend = (primaryitemlist.spend_target_value - spendsthismonth_primaryitemlistid).to_s(:delimited)
 
 - else
   div.main-image
@@ -38,7 +39,5 @@
 
 h3 作る予定の機能
 ul 
-  li 今月と先月の支出を集計する機能(全ての合計と大項目ごとの合計)
-  li 目標値を設定して、それとの比較
   li 収入を入力できるようにする、収入と支出を比較できるようにする
   li 

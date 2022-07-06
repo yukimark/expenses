@@ -5,7 +5,7 @@ class SpendsController < ApplicationController
   def index
     primary_item_list_id = default_primaty_item_list_id
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
-    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+    @primaryitemlists = current_primary_item_lists.order(:id)
     @q = current_spends.ransack(params[:q])
     @spends = ransack_option(@q)
   end
@@ -18,7 +18,7 @@ class SpendsController < ApplicationController
     rescue StandardError
       @q = current_spends.ransack(params[:q])
       @spends = ransack_option(@q)
-      @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+      @primaryitemlists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :index
     end
@@ -27,7 +27,7 @@ class SpendsController < ApplicationController
   def edit
     @spend = Spend.find(params[:id])
     @spend.primary_item_list_id ||= default_primaty_item_list_id
-    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+    @primaryitemlists = current_primary_item_lists.order(:id)
   end
 
   def update
@@ -36,7 +36,7 @@ class SpendsController < ApplicationController
       @spend.update!(spend_params)
       redirect_to spends_path, flash: { success: t('update_message') }
     rescue StandardError
-      @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+      @primaryitemlists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :edit
     end
@@ -55,7 +55,7 @@ class SpendsController < ApplicationController
   end
 
   def default_primaty_item_list_id
-    PrimaryItemList.find_by(name: '未分類', initial_flag: true).id
+    current_primary_item_lists.find_by(name: '未分類').id
   end
 
   def ransack_option(ransack)
@@ -65,6 +65,6 @@ class SpendsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    transition_error if current_spends.find_by(id: params[:id]).blank?
+    transition_error if current_spends.find(params[:id]).blank?
   end
 end

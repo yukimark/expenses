@@ -1,9 +1,10 @@
 class PrimaryItemListsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_permission_check, only: %i[edit update destroy]
+  before_action :edit_permission_check, only: %i[edit update]
+  before_action :destroy_permission_check, only: %i[destroy]
 
   def index
-    @primaryitemlists = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+    @primaryitemlists = current_primary_item_lists.order(:id)
     @primaryitemlist = current_primary_item_lists.new
   end
 
@@ -13,7 +14,7 @@ class PrimaryItemListsController < ApplicationController
       @primaryitemlist.save!
       redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
-      @primaryitemlists  = PrimaryItemList.where_user_id_initial_flag(current_user.id)
+      @primaryitemlists  = current_primary_item_lists.order(:id)
       flash.now[:danger] = @primaryitemlist.error_message
       render :index
     end
@@ -43,12 +44,16 @@ class PrimaryItemListsController < ApplicationController
   private
 
   def primaryitemlist_params
-    params.require(:primary_item_list).permit(:name, :user_id)
+    params.require(:primary_item_list).permit(:name, :user_id, :spend_target_value)
   end
 
   # before_action
 
   def edit_permission_check
+    transition_error if current_primary_item_lists.find(params[:id]).blank?
+  end
+
+  def destroy_permission_check
     transition_error if current_primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
   end
 end

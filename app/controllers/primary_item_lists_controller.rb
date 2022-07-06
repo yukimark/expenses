@@ -1,6 +1,7 @@
 class PrimaryItemListsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_permission_check, only: %i[edit update destroy]
+  before_action :edit_permission_check, only: %i[edit update]
+  before_action :destroy_permission_check, only: %i[destroy]
 
   def index
     @primaryitemlists = current_primary_item_lists.order(:id)
@@ -49,6 +50,10 @@ class PrimaryItemListsController < ApplicationController
   # before_action
 
   def edit_permission_check
+    transition_error if current_primary_item_lists.find(params[:id]).blank?
+  end
+
+  def destroy_permission_check
     transition_error if current_primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
   end
 end

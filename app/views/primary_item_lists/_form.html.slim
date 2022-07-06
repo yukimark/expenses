@@ -3,11 +3,22 @@
     = message
     button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
 = form_with class: 'form', model: @primaryitemlist, local: true do |f|
-  .form-group
-    = f.label :name
-      = t('name')
+  - if @primaryitemlist.initial_flag
+    p = t('name')
+    p = @primaryitemlist.name
+  - else
+    .form-group
+      = f.label :name
+        = t('name')
+        span.badge.bg-danger.ms-1
+          | 必須
+      br
+      = f.text_field :name, class: 'txt-box'
+  .form-group 
+    = f.label :spend_target_value
+      = t('spend_target_value')
       span.badge.bg-danger.ms-1
         | 必須
     br
-    = f.text_field :name, class: 'txt-box'
+    = f.text_field :spend_target_value, class: 'txt-box'
   = f.submit nil, class: 'submit'

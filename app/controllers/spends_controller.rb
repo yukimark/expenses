@@ -65,6 +65,6 @@ class SpendsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    transition_error if current_spends.find_by(id: params[:id]).blank?
+    transition_error if current_spends.find(params[:id]).blank?
   end
 end

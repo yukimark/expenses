@@ -17,7 +17,7 @@
 class PrimaryItemList < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :user_id }
   validates :initial_flag, inclusion: { in: [true, false] }
-  validates :spend_target_value, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 999999999999}
+  validates :spend_target_value, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 999999999}
 
   has_many :spends, dependent: :nullify
   belongs_to :user

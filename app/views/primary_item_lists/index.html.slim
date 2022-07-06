@@ -6,16 +6,17 @@ div.index-table
   table.short-table
     thead
       tr 
-        th =t('name')
-        th =t('edit')
-        th =t('destroy')
+        th = t('name')
+        th = t('spend_target_value')
+        th = t('edit')
+        th = t('destroy')
     tbody 
       - @primaryitemlists.each do |primaryitemlist|
         tr 
           td = primaryitemlist.name
+          td.td-spend = primaryitemlist.spend_target_value.to_s(:delimited)
           td.td-edit
-            - unless primaryitemlist.initial_flag
-              = link_to t('edit'), edit_primary_item_list_path(primaryitemlist)
+            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist)
           td.td-destroy 
             - unless primaryitemlist.initial_flag 
               = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}

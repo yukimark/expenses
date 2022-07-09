@@ -7,7 +7,7 @@ class SpendsController < ApplicationController
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primaryitemlists = current_primary_item_lists.order(:id)
     @q = current_spends.ransack(params[:q])
-    @spends = ransack_option(@q)
+    @spends = ransack_search
   end
 
   def create
@@ -58,13 +58,13 @@ class SpendsController < ApplicationController
     current_primary_item_lists.find_by(name: '未分類').id
   end
 
-  def ransack_option(ransack)
-    ransack.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+  def ransack_search
+    @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 
   # before_action
 
   def edit_permission_check
-    transition_error if current_spends.find(params[:id]).blank?
+    transition_error if current_spends.find_by(id: params[:id]).blank?
   end
 end

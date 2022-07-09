@@ -50,7 +50,7 @@ class PrimaryItemListsController < ApplicationController
   # before_action
 
   def edit_permission_check
-    transition_error if current_primary_item_lists.find(params[:id]).blank?
+    transition_error if current_primary_item_lists.find_by(id: params[:id]).blank?
   end
 
   def destroy_permission_check

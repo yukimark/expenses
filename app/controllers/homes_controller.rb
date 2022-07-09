@@ -2,7 +2,7 @@ class HomesController < ApplicationController
   rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index
-    authorize! 
+    authorize!
 
     d = Time.zone.today
     @spendsthismonth = current_spends.where(created_at: d.in_time_zone.all_month)
@@ -15,9 +15,8 @@ class HomesController < ApplicationController
   def setting; end
 
   private
-  
+
   def user_not_authorized
     render :index
   end
-
 end

@@ -1,0 +1,2 @@
+class PrimaryItemListsLoyalty < ApplicationLoyalty
+end

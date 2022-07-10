@@ -1,4 +1,5 @@
 class HomesController < ApplicationController
+  before_action :logged_in_user, only: %i[setting]
   rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index

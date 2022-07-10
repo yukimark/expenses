@@ -1,7 +1,6 @@
 class PrimaryItemListsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_permission_check, only: %i[edit update]
-  before_action :destroy_permission_check, only: %i[destroy]
+  rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index
     @primaryitemlists = current_primary_item_lists.order(:id)
@@ -22,12 +21,14 @@ class PrimaryItemListsController < ApplicationController
 
   def destroy
     @primaryitemlist = PrimaryItemList.find(params[:id])
+    authorize! @primaryitemlist
     @primaryitemlist.destroy
     redirect_to primary_item_lists_path, flash: { success: t('destroy_message') }
   end
 
   def update
     @primaryitemlist = PrimaryItemList.find(params[:id])
+    authorize! @primaryitemlist
     begin
       @primaryitemlist.update!(primaryitemlist_params)
       redirect_to primary_item_lists_path, flash: { success: t('success_message') }
@@ -39,6 +40,7 @@ class PrimaryItemListsController < ApplicationController
 
   def edit
     @primaryitemlist = PrimaryItemList.find(params[:id])
+    authorize! @primaryitemlist
   end
 
   private
@@ -47,13 +49,7 @@ class PrimaryItemListsController < ApplicationController
     params.require(:primary_item_list).permit(:name, :user_id, :spend_target_value)
   end
 
-  # before_action
-
-  def edit_permission_check
-    transition_error if current_primary_item_lists.find_by(id: params[:id]).blank?
-  end
-
-  def destroy_permission_check
-    transition_error if current_primary_item_lists.find_by(id: params[:id], initial_flag: false).blank?
+  def user_not_authorized
+    redirect_to root_path, flash: { alert: '無効なURLです。' }
   end
 end

@@ -7,7 +7,7 @@
     = f.label :primary_item_list_id
       = t('primary_item')
     br
-    = f.collection_select :primary_item_list_id, @primaryitemlists, :id, :name, selected: @spend.primary_item_list_id
+    = f.collection_select :primary_item_list_id, @primary_item_lists, :id, :name, selected: @spend.primary_item_list_id
   .form-group
     = f.label :content
       = t('content')

@@ -7,7 +7,7 @@
       tbody 
         tr 
           th 今月の支出合計
-          td.td-spend = @spendsum.to_s(:delimited)
+          td.td-spend = @sum_this_month_spends_price.to_s(:delimited)
     h2 詳細
     table 
       thead 
@@ -20,18 +20,18 @@
       tbody 
         tr 
           th 合計
-          td.td-spend = @spendsprevmonth.sum(:price).to_s(:delimited)
-          td.td-spend = @spendsum.to_s(:delimited)
-          td.td-spend = @spendtargetvaluesum.to_s(:delimited)
-          td.td-spend = (@spendtargetvaluesum - @spendsum).to_s(:delimited)
-        - @primaryitemlists.each do |primaryitemlist|
-          - spendsthismonth_primaryitemlistid = @spendsthismonth.where(primary_item_list_id: primaryitemlist.id).sum(:price)
+          td.td-spend = @sum_prev_month_spends_price.to_s(:delimited)
+          td.td-spend = @sum_this_month_spends_price.to_s(:delimited)
+          td.td-spend = @sum_spends_target_value.to_s(:delimited)
+          td.td-spend = (@sum_spends_target_value - @sum_this_month_spends_price).to_s(:delimited)
+        - @primary_item_lists.each do |primary_item_list|
+          - sum_this_month_spends_primary_item_list_id = @this_month_spends.where(primary_item_list_id: primary_item_list.id).sum(:price)
           tr 
-            th = primaryitemlist.name
-            td.td-spend = @spendsprevmonth.where(primary_item_list_id: primaryitemlist.id).sum(:price).to_s(:delimited)
-            td.td-spend = spendsthismonth_primaryitemlistid.to_s(:delimited)
-            td.td-spend = primaryitemlist.spend_target_value.to_s(:delimited)
-            td.td-spend = (primaryitemlist.spend_target_value - spendsthismonth_primaryitemlistid).to_s(:delimited)
+            th = primary_item_list.name
+            td.td-spend = @prev_month_spends.where(primary_item_list_id: primary_item_list.id).sum(:price).to_s(:delimited)
+            td.td-spend = sum_this_month_spends_primary_item_list_id.to_s(:delimited)
+            td.td-spend = primary_item_list.spend_target_value.to_s(:delimited)
+            td.td-spend = (primary_item_list.spend_target_value - sum_this_month_spends_primary_item_list_id).to_s(:delimited)
 
 - else
   div.main-image

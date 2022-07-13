@@ -3,49 +3,49 @@ class PrimaryItemListsController < ApplicationController
   rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index
-    @primaryitemlists = current_primary_item_lists.order(:id)
-    @primaryitemlist = current_primary_item_lists.new
+    @primary_item_lists = current_primary_item_lists.order(:id)
+    @primary_item_list = current_primary_item_lists.new
   end
 
   def create
-    @primaryitemlist = current_primary_item_lists.new(primaryitemlist_params)
+    @primary_item_list = current_primary_item_lists.new(primary_item_list_params)
     begin
-      @primaryitemlist.save!
+      @primary_item_list.save!
       redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
-      @primaryitemlists  = current_primary_item_lists.order(:id)
-      flash.now[:danger] = @primaryitemlist.error_message
+      @primary_item_lists  = current_primary_item_lists.order(:id)
+      flash.now[:danger] = @primary_item_list.error_message
       render :index
     end
   end
 
   def destroy
-    @primaryitemlist = PrimaryItemList.find(params[:id])
-    authorize! @primaryitemlist
-    @primaryitemlist.destroy
+    @primary_item_list = PrimaryItemList.find(params[:id])
+    authorize! @primary_item_list
+    @primary_item_list.destroy
     redirect_to primary_item_lists_path, flash: { success: t('destroy_message') }
   end
 
   def update
-    @primaryitemlist = PrimaryItemList.find(params[:id])
-    authorize! @primaryitemlist
+    @primary_item_list = PrimaryItemList.find(params[:id])
+    authorize! @primary_item_list
     begin
-      @primaryitemlist.update!(primaryitemlist_params)
+      @primary_item_list.update!(primary_item_list_params)
       redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
-      flash.now[:danger] = @primaryitemlist.error_message
+      flash.now[:danger] = @primary_item_list.error_message
       render :edit
     end
   end
 
   def edit
-    @primaryitemlist = PrimaryItemList.find(params[:id])
-    authorize! @primaryitemlist
+    @primary_item_list = PrimaryItemList.find(params[:id])
+    authorize! @primary_item_list
   end
 
   private
 
-  def primaryitemlist_params
+  def primary_item_list_params
     params.require(:primary_item_list).permit(:name, :user_id, :spend_target_value)
   end
 

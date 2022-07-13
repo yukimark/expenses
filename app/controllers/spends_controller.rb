@@ -1,13 +1,13 @@
 class SpendsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_permission_check, only: %i[edit update destroy]
+  rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index
     primary_item_list_id = default_primaty_item_list_id
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primary_item_lists = current_primary_item_lists.order(:id)
     @q = current_spends.ransack(params[:q])
-    @spends = ransack_option(@q)
+    @spends = target_spends
   end
 
   def create
@@ -17,8 +17,8 @@ class SpendsController < ApplicationController
       redirect_to spends_path, flash: { success: t('success_message') }
     rescue StandardError
       @q = current_spends.ransack(params[:q])
-      @spends = ransack_option(@q)
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @spends = target_spends
+      @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :index
     end
@@ -26,17 +26,19 @@ class SpendsController < ApplicationController
 
   def edit
     @spend = Spend.find(params[:id])
+    authorize! @spend
     @spend.primary_item_list_id ||= default_primaty_item_list_id
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primary_item_lists = current_primary_item_lists.order(:id)
   end
 
   def update
     @spend = Spend.find(params[:id])
+    authorize! @spend
     begin
       @spend.update!(spend_params)
       redirect_to spends_path, flash: { success: t('update_message') }
     rescue StandardError
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :edit
     end
@@ -44,6 +46,7 @@ class SpendsController < ApplicationController
 
   def destroy
     @spend = Spend.find(params[:id])
+    authorize! @spend
     @spend.destroy
     redirect_to spends_path, flash: { success: t('destroy_message') }
   end
@@ -58,13 +61,11 @@ class SpendsController < ApplicationController
     current_primary_item_lists.find_by(name: '未分類').id
   end
 
-  def ransack_option(ransack)
-    ransack.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+  def target_spends
+    @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 
-  # before_action
-
-  def edit_permission_check
-    transition_error if current_spends.find(params[:id]).blank?
+  def user_not_authorized
+    redirect_to root_path, flash: { alert: '無効なURLです。' }
   end
 end

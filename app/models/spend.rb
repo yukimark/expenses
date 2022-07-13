@@ -16,4 +16,10 @@ class Spend < ApplicationRecord
 
   belongs_to :user
   belongs_to :primary_item_list
+
+  # 今月のデータ取得
+  scope :this_month, -> { where(created_at: Date.current.all_month) }
+
+  # 先月のデータ取得
+  scope :prev_month, -> { where(created_at: Date.current.prev_month.all_month) }
 end

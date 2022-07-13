@@ -11,12 +11,12 @@ div.index-table
         th = t('edit')
         th = t('destroy')
     tbody 
-      - @primaryitemlists.each do |primaryitemlist|
+      - @primary_item_lists.each do |primary_item_list|
         tr 
-          td = primaryitemlist.name
-          td.td-spend = primaryitemlist.spend_target_value.to_s(:delimited)
+          td = primary_item_list.name
+          td.td-spend = primary_item_list.spend_target_value.to_s(:delimited)
           td.td-edit
-            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist)
+            = link_to t('edit'), edit_primary_item_list_path(primary_item_list)
           td.td-destroy 
-            - unless primaryitemlist.initial_flag 
-              = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}
+            - unless primary_item_list.initial_flag 
+              = link_to t('destroy'), primary_item_list, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}

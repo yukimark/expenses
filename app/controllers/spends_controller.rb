@@ -7,7 +7,7 @@ class SpendsController < ApplicationController
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
     @primary_item_lists = current_primary_item_lists.order(:id)
     @q = current_spends.ransack(params[:q])
-    @spends = spends_processing_to_display
+    @spends = target_spends
   end
 
   def create
@@ -17,7 +17,7 @@ class SpendsController < ApplicationController
       redirect_to spends_path, flash: { success: t('success_message') }
     rescue StandardError
       @q = current_spends.ransack(params[:q])
-      @spends = spends_processing_to_display
+      @spends = target_spends
       @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :index
@@ -61,7 +61,7 @@ class SpendsController < ApplicationController
     current_primary_item_lists.find_by(name: '未分類').id
   end
 
-  def spends_processing_to_display
+  def target_spends
     @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
   end
 

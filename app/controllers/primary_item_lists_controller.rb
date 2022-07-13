@@ -13,7 +13,7 @@ class PrimaryItemListsController < ApplicationController
       @primary_item_list.save!
       redirect_to primary_item_lists_path, flash: { success: t('success_message') }
     rescue StandardError
-      @primary_item_lists  = current_primary_item_lists.order(:id)
+      @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @primary_item_list.error_message
       render :index
     end

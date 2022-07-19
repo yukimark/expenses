@@ -8,37 +8,38 @@ html lang='ja'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-  body.bg-light
-    header.pt-3.bg-success.bg-gradient
-      div.container.d-flex.flex-row.justify-content-between
-        div.pb-2
-          h1= link_to t('expenses'), root_path, class: 'text-decoration-none text-reset'
-        div
-          - if user_signed_in?
-            ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-primary
-                = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'text-white'
-          - else
-            ul.d-flex.flex-row.list-group
-              li.ms-3.list-group-item.bg-primary= link_to t('signup'), new_user_registration_path, class: 'text-white'
-              li.ms-3.list-group-item.bg-primary= link_to t('login'), new_user_session_path, class: 'text-white'
-    - if user_signed_in?
-      nav.container
-        ul.list-group.d-flex.flex-row
-          li.list-group-item= link_to 'トップ', root_path
-          li.list-group-item= link_to '家計', spends_path
-          li.list-group-item= link_to '設定', setting_path
-    main.container.mt-5
-      - flash.each do |message_type, message|
-        - if message_type == 'alert'
-          div.container.alert.alert-danger.alert-dismissible.fade.show
-            = message
-            button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
-        - elsif message_type == 'notice'
-          div.container.alert.alert-success.alert-dismissible.fade.show
-            = message
-            button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
-      = yield
-    footer.bg-success.bg-gradient.mt-5
-      dev.container
-        p フッターを作る予定
+  body.base
+    .body
+      header
+        div.header
+          div.header-logo
+            h1 = link_to image_tag('expenses_logo.png'), root_path
+          div.header-link
+            - if user_signed_in?
+              ul
+                li
+                  = link_to 'ログアウト', destroy_user_session_path, method: :delete
+            - else
+              ul
+                li = link_to t('signup'), new_user_registration_path
+                li = link_to t('login'), new_user_session_path
+      - if user_signed_in?
+        nav
+          ul
+            li = link_to 'トップ', root_path
+            li = link_to '支出', spends_path
+            li = link_to '設定', setting_path
+      main.main
+        - flash.each do |message_type, message|
+          - if message_type == 'alert'
+            div.alert.alert-danger.alert-dismissible.fade.show
+              = message
+              button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
+          - elsif message_type == 'notice'
+            div.alert.alert-primary.alert-dismissible.fade.show
+              = message
+              button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
+        = yield
+      footer
+        dev
+          p &copy 2022 yukimark

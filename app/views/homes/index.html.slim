@@ -1,6 +1,43 @@
 - provide(:title, 'トップ')
 - if user_signed_in?
   p ログインしてる人:#{ current_user.email }
-h2 Homes#index
-p Find me in app/views/homes/index.html.slim
-p いろいろまとめ的なものを作る予定
+  div.index-table
+    h2 今月の支出合計
+    table 
+      tbody 
+        tr 
+          th 今月の支出合計
+          td.td-spend = @sum_this_month_spends_price.to_s(:delimited)
+    h2 詳細
+    table 
+      thead 
+        tr 
+          th 項目名
+          th 先月の支出
+          th 今月の支出合計
+          th 今月の支出目標
+          th 目標値との比較
+      tbody 
+        tr 
+          th 合計
+          td.td-spend = @sum_prev_month_spends_price.to_s(:delimited)
+          td.td-spend = @sum_this_month_spends_price.to_s(:delimited)
+          td.td-spend = @sum_spends_target_value.to_s(:delimited)
+          td.td-spend = (@sum_spends_target_value - @sum_this_month_spends_price).to_s(:delimited)
+        - @primary_item_lists.each do |primary_item_list|
+          - sum_this_month_spends_primary_item_list_id = @this_month_spends.where(primary_item_list_id: primary_item_list.id).sum(:price)
+          tr 
+            th = primary_item_list.name
+            td.td-spend = @prev_month_spends.where(primary_item_list_id: primary_item_list.id).sum(:price).to_s(:delimited)
+            td.td-spend = sum_this_month_spends_primary_item_list_id.to_s(:delimited)
+            td.td-spend = primary_item_list.spend_target_value.to_s(:delimited)
+            td.td-spend = (primary_item_list.spend_target_value - sum_this_month_spends_primary_item_list_id).to_s(:delimited)
+
+- else
+  div.main-image
+    img src='assets/home_top.jpg'
+
+h3 作る予定の機能
+ul 
+  li 収入を入力できるようにする、収入と支出を比較できるようにする
+  li 

@@ -1,14 +1,24 @@
 - flash.each do |message_type, message|
-  div class="container alert alert-#{message_type} alert-dismissible fade show"
+  div class="alert alert-#{message_type} alert-dismissible fade show"
     = message
     button.btn-close[type='button' data-bs-dismiss='alert' aria-label='Close']
-= form_with class: 'container', model: @primaryitemlist, local: true do |f|
-  .row
-    .form-group.col-lg-6.col-xl-3
-      = f.label :name, class: 'form-label'
+= form_with class: 'form', model: @primary_item_list, local: true do |f|
+  - if @primary_item_list.initial_flag
+    p = t('name')
+    p = @primary_item_list.name
+  - else
+    .form-group
+      = f.label :name
         = t('name')
         span.badge.bg-danger.ms-1
           | 必須
-      = f.text_field :name, class: 'form-control'
-      = f.hidden_field :user_id, :value => current_user.id
-  = f.submit nil,class: 'btn btn-primary mt-3'
+      br
+      = f.text_field :name, class: 'txt-box'
+  .form-group 
+    = f.label :spend_target_value
+      = t('spend_target_value')
+      span.badge.bg-danger.ms-1
+        | 必須
+    br
+    = f.text_field :spend_target_value, class: 'txt-box'
+  = f.submit nil, class: 'submit'

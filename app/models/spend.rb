@@ -11,9 +11,15 @@
 #  user_id(userと紐づけ)                           :integer          not null
 #
 class Spend < ApplicationRecord
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999999 }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }
   validates :user_id, presence: true
 
   belongs_to :user
   belongs_to :primary_item_list
+
+  # 今月のデータ取得
+  scope :this_month, -> { where(created_at: Date.current.all_month) }
+
+  # 先月のデータ取得
+  scope :prev_month, -> { where(created_at: Date.current.prev_month.all_month) }
 end

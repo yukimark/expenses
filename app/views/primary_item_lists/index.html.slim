@@ -1,21 +1,22 @@
 - provide(:title, '大項目一覧')
-h2 大項目一覧、追加、編集、削除
-
-= render partial: 'form'
-
-table.table.table-hover.table-bordered.container.mt-2
-  thead.table-success
-    tr 
-      th =t('name')
-      th =t('edit')
-      th =t('destroy')
-  tbody 
-    - @primaryitemlists.each do |primaryitemlist|
+div.form-box
+  h2.h2-long 大項目一覧、追加、編集、削除
+  = render partial: 'form'
+div.index-table
+  table.short-table
+    thead
       tr 
-        td = primaryitemlist.name
-        td
-          - unless primaryitemlist.initial_flag
-            = link_to t('edit'), edit_primary_item_list_path(primaryitemlist), class: 'btn btn-primary'
-        td 
-          - unless primaryitemlist.initial_flag 
-            = link_to t('destroy'), primaryitemlist, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}, class: 'btn btn-danger'
+        th = t('name')
+        th = t('spend_target_value')
+        th = t('edit')
+        th = t('destroy')
+    tbody 
+      - @primary_item_lists.each do |primary_item_list|
+        tr 
+          td = primary_item_list.name
+          td.td-spend = primary_item_list.spend_target_value.to_s(:delimited)
+          td.td-edit
+            = link_to t('edit'), edit_primary_item_list_path(primary_item_list)
+          td.td-destroy 
+            - unless primary_item_list.initial_flag 
+              = link_to t('destroy'), primary_item_list, method: :delete, data:{confirm: '同じ名前の大項目は全て空になってしまいますが、本当に削除してもよいですか?'}

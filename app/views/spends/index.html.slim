@@ -1,22 +1,39 @@
 - provide(:title, '出費編集')
-h2.mb-3 出費入力
-= render partial: 'form'
-h2.mt-5 出費一覧
-table.table.table-hover.table-bordered.mt-2.container
-  thead.table-success
-    tr 
-      th.col-2 =t('created_at')
-      th =t('primary_item')
-      th =t('content')
-      th =t('price')
-      th =t('edit')
-      th =t('destroy')
-  tbody 
-    - @spends.each do |spend|
+div.form-box
+  h2 支出入力
+  = render partial: 'form'
+div.form-box
+  h2 検索コーナー
+  = search_form_for @q, class: 'form' do |f|
+    .form-group
+      p 大項目で検索(部分一致)
+      = f.search_field :primary_item_list_name_cont, class: 'txt-box'
+    .form-group
+      p 期間指定で検索
+      = f.date_field :created_at_gteq, include_blank: true, class: 'date-box'
+      span ~
+      = f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'date-box'
+    = f.submit class: 'submit'
+div.index-table
+  h2 支出一覧
+  div.kaminari
+    = paginate @spends
+    = page_entries_info @spends
+  table
+    thead
       tr 
-        td.col-2 = spend.created_at.to_s(:datetime_jp)
-        td = spend.primary_item_list.try(:name)
-        td = spend.content 
-        td.text-end = spend.price.to_s(:delimited)
-        td = link_to t('edit'), edit_spend_path(spend), class: 'btn btn-primary'
-        td = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}, class: 'btn btn-danger'
+        th = sort_link(@q, :created_at, t('created_at'))
+        th = t('primary_item')
+        th = t('content')
+        th = sort_link(@q, :price, t('price'))
+        th = t('edit')
+        th = t('destroy')
+    tbody 
+      - @spends.each do |spend|
+        tr
+          td.td-created_at = spend.created_at.to_s(:datetime_jp)
+          td.td-primary_item = spend.primary_item_list.try(:name)
+          td = spend.content 
+          td.td-spend = spend.price.to_s(:delimited)
+          td.td-edit = link_to t('edit'), edit_spend_path(spend)
+          td.td-destroy = link_to t('destroy'), spend, method: :delete, data:{confirm: '削除してもよいですか?'}

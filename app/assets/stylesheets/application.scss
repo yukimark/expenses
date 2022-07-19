@@ -1,2 +1,222 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+// 変数等
+
+$common-border-bottom: 2px solid blue;
+$common-background-green: lighten(green, 70%);
+$common-background-grey: lighten(grey, 45%);
+
+// リセットCSS的な
+
+.base {
+  background-color: #FFFFEE;
+}
+
+li {
+  list-style: none;
+}
+
+.body {
+  width: 1100px;
+  margin: 0 auto 0;
+  background-color: white;
+}
+
+// コンテンツ
+
+.header {
+  background-color: $common-background-green;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+  .header-link {
+    padding-top: 15px;
+    ul {
+      display: flex;
+      li {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+nav {
+  ul {
+    display: flex;
+    li {
+      border: 2px solid;
+      width: 60px;
+      height: 30px;
+      text-align: center;
+    }
+  }
+}
+
+.main {
+  margin-top: 30px;
+  padding: {
+    left: 20px;
+    right: 20px;
+  }
+  .alert {
+    width: 1050px;
+    margin: 10px auto;
+  }
+}
+
+footer {
+  background-color: $common-background-green;
+  padding-left: 20px;
+  margin-top: 30px;
+  p {
+    text-align: center;
+  }
+}
+
+.form{
+  padding-left: 20px;
+  border: 3px solid;
+  background-color: $common-background-grey;
+  width: 500px;
+  .form-group {
+    margin: 10px 0;
+    label {
+      margin-bottom: 3px;
+    }
+    .txt-box {
+      width: 300px;
+      height: 40px;
+    }
+    .date-box{
+      height: 35px;
+      width: 150px;
+    }
+    p {
+      margin-bottom: 0.3rem;
+    }
+  }
+  .submit {
+    margin: {
+      top: 10px;
+      bottom: 10px;
+    }
+  }
+  .submit-margin {
+    margin-left: 10px;
+  }
+}
+
+.form-box {
+  padding: {
+    top: 20px;
+    bottom: 20px;
+  }
+  h2 {
+    border-bottom: $common-border-bottom;
+    width: 300px;
+    margin-left: 20px;
+    padding-bottom: 5px;
+  }
+  .h2-long {
+    width: 480px;
+  }
+}
+
+
+.index-table {
+  margin-top: 50px;
+  padding-left: 20px;
+  h2 {
+    width: 300px;
+    margin-bottom: 20px;
+    border-bottom: $common-border-bottom;
+  }
+  .kaminari {
+    margin-bottom: 10px;
+    .pagination {
+      span {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+    }
+    
+  }
+  table {
+    border: 1px solid;
+    width: 800px;
+    thead {
+      tr {
+        height: 35px;
+        background-color: $common-background-green;
+        th {
+          border: 1px solid;
+          padding-left: 3px;
+        }
+      }  
+    }
+    tbody {
+      tr {
+        height: 30px;
+        td {
+          border: 1px solid;
+          padding-left: 3px;
+        }
+        th {
+          @extend td;
+        }
+        &:hover td {
+          background-color: $common-background-grey;
+        }
+        .td-created_at {
+          width: 150px;
+        }
+        .td-primary_item {
+          width: 100px;
+        }
+        .td-spend {
+          width: 150px;
+          text-align: right;
+          padding-right: 3px;
+        }
+        .td-edit {
+          width: 50px;
+        }
+        .td-destroy {
+          width: 50px;
+        }
+      }
+    }
+  }
+  .short-table {
+    width: 400px;
+  }
+}
+
+.list {
+  .list-item {
+    margin-bottom: 10px;
+  }
+}
+
+.main-image {
+  img {
+    width: 1060px;
+  }
+}

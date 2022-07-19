@@ -1,22 +1,24 @@
 class SpendsController < ApplicationController
   before_action :logged_in_user
-  before_action :edit_permission_check, only: %i[edit update destroy]
+  rescue_from Banken::NotAuthorizedError, with: :user_not_authorized
 
   def index
     primary_item_list_id = default_primaty_item_list_id
-    @spends = current_spends.order(created_at: :desc)
     @spend = current_spends.new(primary_item_list_id: primary_item_list_id)
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primary_item_lists = current_primary_item_lists.order(:id)
+    @q = current_spends.ransack(params[:q])
+    @spends = target_spends
   end
 
   def create
     @spend = current_spends.new(spend_params)
     begin
       @spend.save!
-      redirect_to spends_path, flash: { success: '保存しました。' }
+      redirect_to spends_path, flash: { success: t('success_message') }
     rescue StandardError
-      @spends = current_spends.order(created_at: :desc)
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @q = current_spends.ransack(params[:q])
+      @spends = target_spends
+      @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :index
     end
@@ -24,17 +26,19 @@ class SpendsController < ApplicationController
 
   def edit
     @spend = Spend.find(params[:id])
+    authorize! @spend
     @spend.primary_item_list_id ||= default_primaty_item_list_id
-    @primaryitemlists = current_primary_item_lists.order(:id)
+    @primary_item_lists = current_primary_item_lists.order(:id)
   end
 
   def update
     @spend = Spend.find(params[:id])
+    authorize! @spend
     begin
       @spend.update!(spend_params)
-      redirect_to spends_path, flash: { success: '更新しました。' }
+      redirect_to spends_path, flash: { success: t('update_message') }
     rescue StandardError
-      @primaryitemlists = current_primary_item_lists.order(:id)
+      @primary_item_lists = current_primary_item_lists.order(:id)
       flash.now[:danger] = @spend.error_message
       render :edit
     end
@@ -42,8 +46,9 @@ class SpendsController < ApplicationController
 
   def destroy
     @spend = Spend.find(params[:id])
+    authorize! @spend
     @spend.destroy
-    redirect_to spends_path, flash: { success: '削除しました。' }
+    redirect_to spends_path, flash: { success: t('destroy_message') }
   end
 
   private
@@ -56,9 +61,11 @@ class SpendsController < ApplicationController
     current_primary_item_lists.find_by(name: '未分類').id
   end
 
-  # before_action
+  def target_spends
+    @q.result.includes(:primary_item_list).order(created_at: :desc).page(params[:page]).per(30)
+  end
 
-  def edit_permission_check
-    transition_error if current_spends.find_by(id: params[:id]).blank?
+  def user_not_authorized
+    redirect_to root_path, flash: { alert: '無効なURLです。' }
   end
 end

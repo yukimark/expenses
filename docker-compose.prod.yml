@@ -1,0 +1,34 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    volumes:
+      - psgl_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5433:5432
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec puma -C config/puma.rb -e production
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app_name
+  web:
+    build:
+      context: containers/nginx
+    # volumes:
+    ports:
+      - 53000:80
+    depends_on:
+      - app
+volumes:
+  psgl_data:

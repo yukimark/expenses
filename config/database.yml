@@ -93,5 +93,6 @@ test:
 production:
   <<: *default
   database: expenses_production
-  username: expenses
+  username: root
   password: <%= ENV['EXPENSES_DATABASE_PASSWORD'] %>
+  host: db_prod

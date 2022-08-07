@@ -83,3 +83,5 @@ gem 'kaminari'
 gem 'ransack'
 # 権限周り
 gem 'banken'
+# 環境変数の設定
+gem 'dotenv-rails'

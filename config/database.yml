@@ -22,15 +22,15 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
   # ローカル用の設定
-  username: <%= ENV['EXPENSES_LOCAL_USERNAME'] %>
-  password: <%= ENV['EXPENSES_LOCAL_PASSWORD'] %>
-  host: <%= ENV['EXPENSES_LOCAL_HOST'] %>
-  port: <%= ENV['EXPENSES_LOCAL_PORT'] %>
+  # username: <%= ENV['EXPENSES_LOCAL_USERNAME'] %>
+  # password: <%= ENV['EXPENSES_LOCAL_PASSWORD'] %>
+  # host: <%= ENV['EXPENSES_LOCAL_HOST'] %>
+  # port: <%= ENV['EXPENSES_LOCAL_PORT'] %>
 
   # docker用の設定
-  # host: db
-  # username: root
-  # password: password
+  host: db
+  username: root
+  password: password
 
 development:
   <<: *default
@@ -93,5 +93,6 @@ test:
 production:
   <<: *default
   database: expenses_production
-  username: expenses
+  username: root
   password: <%= ENV['EXPENSES_DATABASE_PASSWORD'] %>
+  host: db_prod

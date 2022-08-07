@@ -25,7 +25,6 @@ services:
   web:
     build:
       context: containers/nginx
-    # volumes:
     ports:
       - 53000:80
     depends_on:

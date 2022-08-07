@@ -29,5 +29,7 @@ services:
       - 53000:80
     depends_on:
       - app_prod
+    volumes:
+      - .:/myapp
 volumes:
   psgl_data:

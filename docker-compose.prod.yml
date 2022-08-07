@@ -12,7 +12,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     command: bundle exec puma -C config/puma.rb -e production
     tty: true
     stdin_open: true

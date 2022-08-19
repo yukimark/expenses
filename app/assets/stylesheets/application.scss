@@ -142,6 +142,7 @@ footer {
 
 .index-table {
   margin-top: 50px;
+  margin-bottom: 20px;
   padding-left: 20px;
   h2 {
     width: 300px;
@@ -218,5 +219,21 @@ footer {
 .main-image {
   img {
     width: 1060px;
+  }
+}
+
+.site-guidance {
+  h3 {
+    width: 240px;
+    border: 1px solid;
+    text-align: center;
+  }
+  h4 {
+    width: 230px;
+    border-bottom: $common-border-bottom;
+    border-bottom: 1px solid blue;
+  }
+  p {
+    margin-bottom: 20px;
   }
 }

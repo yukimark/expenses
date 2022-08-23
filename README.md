@@ -1,26 +1,26 @@
-# README
+# expensesの概要
+家計簿アプリの支出記録機能のみを作成しました。
 
-test
+# 主な機能
+## ユーザー関連
+- ユーザー登録機能
+- ユーザー情報編集、削除機能
+- ログイン、ログアウト機能
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 支出記録機能
+- 支出記録
+- 支出の編集、削除
+- 支出のソート機能
+- 支出の検索機能
+- 支出の目標値設定
+- 支出のカテゴリ一覧、追加、編集、削除機能
+- 今月の支出の合計などを見られる
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# 使用技術
+- 言語/フレームワーク
+  - Ruby2.7.5/Rails6.1.6
+- DB
+  - PostgreSQL
+- 環境
+  - Docker
+  - vps(ubuntu20.04)
